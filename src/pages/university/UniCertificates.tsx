@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AppLayout } from "@/components/AppLayout";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -12,9 +12,11 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogT
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Plus, Search, MoreHorizontal, Copy, Loader2, ExternalLink } from "lucide-react";
+import { Plus, Search, MoreHorizontal, Copy, Loader2, ExternalLink, FileBadge } from "lucide-react";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
+import { Paginator, usePaged } from "@/components/Pagination";
+import { EmptyState } from "@/components/StatCard";
 
 const empty = { certificate_number: "", student_name: "", ic_passport: "", matric_number: "", faculty: "", programme_name: "", award_type: "", graduation_date: "", convocation_date: "", certificate_status: "valid" as const };
 
