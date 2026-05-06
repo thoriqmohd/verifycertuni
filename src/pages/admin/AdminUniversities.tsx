@@ -144,8 +144,17 @@ export default function AdminUniversities() {
                     {slice.map((r) => (
                       <TableRow key={r.id}>
                         <TableCell>
-                          <div className="font-medium">{r.name}</div>
-                          <div className="text-xs text-muted-foreground">{r.contact_email}</div>
+                          <div className="flex items-center gap-3">
+                            {r.logo_url ? (
+                              <img src={r.logo_url} alt={`${r.name} logo`} className="h-9 w-9 object-contain rounded border bg-white p-0.5" />
+                            ) : (
+                              <div className="h-9 w-9 rounded border bg-muted flex items-center justify-center text-muted-foreground"><Building2 className="h-4 w-4" /></div>
+                            )}
+                            <div>
+                              <div className="font-medium">{r.name}</div>
+                              <div className="text-xs text-muted-foreground">{r.contact_email}</div>
+                            </div>
+                          </div>
                         </TableCell>
                         <TableCell className="text-sm hidden md:table-cell">{r.registration_no}</TableCell>
                         <TableCell>{r.commission_rate}%</TableCell>
