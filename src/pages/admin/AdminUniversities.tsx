@@ -18,7 +18,7 @@ import { generateApiKey, generateApiSecret, formatDate } from "@/lib/format";
 import { Paginator, usePaged } from "@/components/Pagination";
 import { EmptyState } from "@/components/StatCard";
 
-const empty = { name: "", registration_no: "", contact_person: "", contact_email: "", address: "", commission_rate: 40 };
+const empty = { name: "", registration_no: "", contact_person: "", contact_email: "", address: "", commission_rate: 40, logo_url: "" };
 
 export default function AdminUniversities() {
   const [rows, setRows] = useState<any[]>([]);
@@ -43,18 +43,27 @@ export default function AdminUniversities() {
   const openNew = () => { setEditId(null); setF(empty); setDialogOpen(true); };
   const openEdit = (r: any) => { setEditId(r.id); setF({ ...r }); setDialogOpen(true); };
 
+  const uploadLogo = async (file: File) => {
+    const path = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.\-_]/g, "_")}`;
+    const { error: upErr } = await supabase.storage.from("university-logos").upload(path, file, { upsert: true });
+    if (upErr) { toast.error(upErr.message); return; }
+    const { data } = supabase.storage.from("university-logos").getPublicUrl(path);
+    setF((prev: any) => ({ ...prev, logo_url: data.publicUrl }));
+    toast.success("Logo uploaded");
+  };
+
   const save = async () => {
     setBusy(true);
     if (editId) {
       const { error } = await supabase.from("universities").update({
         name: f.name, registration_no: f.registration_no, contact_person: f.contact_person,
-        contact_email: f.contact_email, address: f.address, commission_rate: Number(f.commission_rate),
+        contact_email: f.contact_email, address: f.address, commission_rate: Number(f.commission_rate), logo_url: f.logo_url,
       }).eq("id", editId);
       if (error) toast.error(error.message); else toast.success("University updated");
     } else {
       const { error } = await supabase.from("universities").insert({
         name: f.name, registration_no: f.registration_no, contact_person: f.contact_person,
-        contact_email: f.contact_email, address: f.address, commission_rate: Number(f.commission_rate),
+        contact_email: f.contact_email, address: f.address, commission_rate: Number(f.commission_rate), logo_url: f.logo_url,
         api_key: generateApiKey(), api_secret: generateApiSecret(), status: "pending",
       });
       if (error) toast.error(error.message); else toast.success("University added");
