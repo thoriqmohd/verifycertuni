@@ -1,8 +1,25 @@
 import { Link } from "react-router-dom";
-import { ShieldCheck, Building2, Search, FileBadge, ArrowRight, Lock, Zap, TrendingUp, BarChart3, BadgeCheck, QrCode, FileText } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ShieldCheck, Building2, Search, FileBadge, ArrowRight, Lock, Zap, TrendingUp, BarChart3, BadgeCheck, QrCode, FileText, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import hero from "@/assets/hero.jpg";
+import banner1 from "@/assets/banner-1.png";
+import banner2 from "@/assets/banner-2.png";
+
+const SLIDES = [
+  {
+    image: banner1,
+    eyebrow: "Trusted by Malaysian universities & employers",
+    title: <>The trusted source-of-truth for <span className="text-success">academic certificates</span> in Malaysia.</>,
+    desc: "VerifyCert connects universities, employers and graduates on one platform — instant, tamper-evident, audit-ready verification reports.",
+  },
+  {
+    image: banner2,
+    eyebrow: "Verify in seconds. Hire with confidence.",
+    title: <>Scan. Verify. <span className="text-success">Done.</span></>,
+    desc: "From QR scan to official PDF report in under 2 seconds — straight from the issuing university's records.",
+  },
+];
 
 const Step = ({ n, icon: Icon, title, desc }: any) => (
   <div className="data-card p-6">
