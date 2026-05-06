@@ -30,7 +30,7 @@ export function StatCard({
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <div className="text-[11px] uppercase tracking-wider text-muted-foreground font-semibold">{label}</div>
-          <div className="text-2xl lg:text-3xl font-bold mt-2 tabular-nums truncate">{value}</div>
+          <div className="text-2xl lg:text-3xl font-bold mt-2 tabular-nums break-words">{value}</div>
           {trend && (
             <div className={cn("inline-flex items-center gap-1 mt-2 text-xs font-medium px-1.5 py-0.5 rounded",
               trendUp ? "text-success bg-success/10" : "text-destructive bg-destructive/10")}>
