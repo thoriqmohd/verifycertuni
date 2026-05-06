@@ -233,22 +233,7 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Security */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 lg:px-6 grid md:grid-cols-3 gap-6">
-          {[
-            { icon: Lock, title: "Bank-grade encryption", desc: "All data in transit secured with TLS. HMAC SHA-256 signed API calls." },
-            { icon: ShieldCheck, title: "Source-of-truth data", desc: "Certificates sync directly from registrar systems — no middlemen." },
-            { icon: BarChart3, title: "Full audit trail", desc: "Every verification, payment and certificate change is logged." },
-          ].map((s, i) => (
-            <div key={i} className="data-card p-6">
-              <div className="h-10 w-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3"><s.icon className="h-5 w-5" /></div>
-              <h3 className="font-semibold mb-1">{s.title}</h3>
-              <p className="text-sm text-muted-foreground">{s.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+
 
       {/* FAQ */}
       <section id="faq" className="py-20 bg-secondary/40 border-y">
