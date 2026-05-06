@@ -214,25 +214,8 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Universities */}
-      <section id="universities" className="py-20 bg-secondary/40 border-y">
-        <div className="max-w-7xl mx-auto px-4 lg:px-6 grid lg:grid-cols-2 gap-12 items-start">
-          <div>
-            <span className="text-xs uppercase tracking-wider text-primary font-semibold">For Universities</span>
-            <h2 className="text-3xl lg:text-4xl font-bold mt-2 mb-4">A new digital revenue stream — without changing your workflow</h2>
-            <p className="text-muted-foreground mb-6">Plug VerifyCert into your registrar system and stop drowning in manual verification requests. We share verification revenue back to your institution.</p>
-            <Button asChild><Link to="/login">Explore the university demo</Link></Button>
-          </div>
-          <div className="grid sm:grid-cols-2 gap-5">
-            <Benefit icon={TrendingUp} title="New revenue stream" desc="Earn 60% commission on every verification request." />
-            <Benefit icon={Zap} title="Reduce workload" desc="Cut manual email-based verifications to near zero." />
-            <Benefit icon={ShieldCheck} title="Protect reputation" desc="Block fraudulent certificates with revoke + suspend tools." />
-            <Benefit icon={Lock} title="API-ready" desc="HMAC-signed sync endpoints and webhooks." />
-          </div>
-        </div>
-      </section>
 
-      {/* Employers */}
+
       <section id="employers" className="py-20">
         <div className="max-w-7xl mx-auto px-4 lg:px-6 grid lg:grid-cols-2 gap-12 items-start">
           <div className="grid sm:grid-cols-2 gap-5 order-2 lg:order-1">
