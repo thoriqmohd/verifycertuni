@@ -1,0 +1,188 @@
+import { Link } from "react-router-dom";
+import { ShieldCheck, Building2, Search, FileBadge, ArrowRight, Lock, Zap, TrendingUp, BarChart3, BadgeCheck, QrCode, FileText } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import hero from "@/assets/hero.jpg";
+
+const Step = ({ n, icon: Icon, title, desc }: any) => (
+  <div className="data-card p-6">
+    <div className="flex items-center gap-3 mb-3">
+      <div className="h-10 w-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center"><Icon className="h-5 w-5" /></div>
+      <span className="text-xs font-semibold tracking-wider text-muted-foreground">STEP {n}</span>
+    </div>
+    <h3 className="font-semibold mb-1">{title}</h3>
+    <p className="text-sm text-muted-foreground">{desc}</p>
+  </div>
+);
+
+const Benefit = ({ icon: Icon, title, desc }: any) => (
+  <div className="flex gap-3">
+    <div className="h-9 w-9 rounded-lg bg-success/10 text-success flex items-center justify-center shrink-0"><Icon className="h-5 w-5" /></div>
+    <div>
+      <h4 className="font-semibold mb-0.5">{title}</h4>
+      <p className="text-sm text-muted-foreground">{desc}</p>
+    </div>
+  </div>
+);
+
+export default function Landing() {
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Nav */}
+      <header className="border-b sticky top-0 z-40 bg-background/80 backdrop-blur">
+        <div className="max-w-7xl mx-auto flex items-center justify-between h-16 px-4 lg:px-6">
+          <Link to="/" className="flex items-center gap-2">
+            <div className="h-9 w-9 rounded-lg bg-primary flex items-center justify-center"><ShieldCheck className="h-5 w-5 text-primary-foreground" /></div>
+            <span className="font-bold text-lg">VerifyCert</span>
+          </Link>
+          <nav className="hidden md:flex items-center gap-7 text-sm">
+            <a href="#how" className="text-muted-foreground hover:text-foreground">How it works</a>
+            <a href="#universities" className="text-muted-foreground hover:text-foreground">For universities</a>
+            <a href="#employers" className="text-muted-foreground hover:text-foreground">For employers</a>
+            <a href="#faq" className="text-muted-foreground hover:text-foreground">FAQ</a>
+          </nav>
+          <div className="flex items-center gap-2">
+            <Button variant="ghost" asChild><Link to="/login">Sign in</Link></Button>
+            <Button asChild><Link to="/register">Get started</Link></Button>
+          </div>
+        </div>
+      </header>
+
+      {/* Hero */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 -z-10">
+          <img src={hero} alt="" className="w-full h-full object-cover opacity-90" />
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/80 to-primary/40" />
+        </div>
+        <div className="max-w-7xl mx-auto px-4 lg:px-6 py-24 lg:py-32">
+          <div className="max-w-2xl text-primary-foreground">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs backdrop-blur mb-5">
+              <BadgeCheck className="h-3.5 w-3.5" /> Trusted by Malaysian universities
+            </div>
+            <h1 className="text-4xl lg:text-6xl font-bold leading-tight mb-5">Trusted Academic Certificate Verification Platform</h1>
+            <p className="text-lg lg:text-xl text-white/85 mb-8">Helping universities, employers and graduates verify academic credentials securely, quickly and transparently.</p>
+            <div className="flex flex-wrap gap-3">
+              <Button size="lg" variant="secondary" asChild><Link to="/register">Verify Certificate <ArrowRight className="ml-1.5 h-4 w-4" /></Link></Button>
+              <Button size="lg" variant="outline" className="bg-white/10 text-white border-white/30 hover:bg-white/20 hover:text-white" asChild><Link to="/login">University Demo</Link></Button>
+            </div>
+            <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-white/80">
+              <div className="flex items-center gap-2"><Lock className="h-4 w-4" /> HMAC-secured API</div>
+              <div className="flex items-center gap-2"><QrCode className="h-4 w-4" /> QR-based validation</div>
+              <div className="flex items-center gap-2"><FileText className="h-4 w-4" /> Official PDF reports</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* How it works */}
+      <section id="how" className="py-20">
+        <div className="max-w-7xl mx-auto px-4 lg:px-6">
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <h2 className="text-3xl lg:text-4xl font-bold mb-3">How it works</h2>
+            <p className="text-muted-foreground">A simple, transparent flow from data sync to verified report.</p>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <Step n="1" icon={Building2} title="University connects" desc="Universities sync graduate certificate data via secure API." />
+            <Step n="2" icon={Search} title="Employer searches" desc="Hiring teams look up a candidate by certificate number or name." />
+            <Step n="3" icon={Zap} title="Pay verification fee" desc="Pay a small flat fee per official verification." />
+            <Step n="4" icon={FileBadge} title="Get official report" desc="Receive a tamper-evident PDF with QR code in seconds." />
+          </div>
+        </div>
+      </section>
+
+      {/* Universities */}
+      <section id="universities" className="py-20 bg-secondary/40 border-y">
+        <div className="max-w-7xl mx-auto px-4 lg:px-6 grid lg:grid-cols-2 gap-12 items-start">
+          <div>
+            <span className="text-xs uppercase tracking-wider text-primary font-semibold">For Universities</span>
+            <h2 className="text-3xl lg:text-4xl font-bold mt-2 mb-4">A new digital revenue stream — without changing your workflow</h2>
+            <p className="text-muted-foreground mb-6">Plug VerifyCert into your registrar system and stop drowning in manual verification requests. We share verification revenue back to your institution.</p>
+            <Button asChild><Link to="/login">Explore the university demo</Link></Button>
+          </div>
+          <div className="grid sm:grid-cols-2 gap-5">
+            <Benefit icon={TrendingUp} title="New revenue stream" desc="Earn 60% commission on every verification request." />
+            <Benefit icon={Zap} title="Reduce workload" desc="Cut manual email-based verifications to near zero." />
+            <Benefit icon={ShieldCheck} title="Protect reputation" desc="Block fraudulent certificates with revoke + suspend tools." />
+            <Benefit icon={Lock} title="API-ready" desc="HMAC-signed sync endpoints and webhooks." />
+          </div>
+        </div>
+      </section>
+
+      {/* Employers */}
+      <section id="employers" className="py-20">
+        <div className="max-w-7xl mx-auto px-4 lg:px-6 grid lg:grid-cols-2 gap-12 items-start">
+          <div className="grid sm:grid-cols-2 gap-5 order-2 lg:order-1">
+            <Benefit icon={Zap} title="Faster hiring" desc="Verifications in seconds, not days of email chasing." />
+            <Benefit icon={ShieldCheck} title="Reduce fraud risk" desc="Confirm certificates against the source institution." />
+            <Benefit icon={FileText} title="Official PDF report" desc="Audit-ready report with verification reference number." />
+            <Benefit icon={QrCode} title="QR-based validation" desc="Anyone can re-verify the report with a single scan." />
+          </div>
+          <div className="order-1 lg:order-2">
+            <span className="text-xs uppercase tracking-wider text-primary font-semibold">For Employers</span>
+            <h2 className="text-3xl lg:text-4xl font-bold mt-2 mb-4">Hire with confidence. Verify in seconds.</h2>
+            <p className="text-muted-foreground mb-6">Stop trusting unverified copies. Pull authoritative certificate data straight from the issuing university.</p>
+            <Button asChild><Link to="/register">Create employer account</Link></Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Revenue sharing */}
+      <section className="py-20 bg-secondary/40 border-y">
+        <div className="max-w-5xl mx-auto px-4 lg:px-6 text-center">
+          <h2 className="text-3xl lg:text-4xl font-bold mb-3">Transparent revenue sharing</h2>
+          <p className="text-muted-foreground mb-10">Every verification fee is split fairly between the platform and the issuing university.</p>
+          <div className="data-card p-8 grid sm:grid-cols-3 gap-8 text-left">
+            <div><div className="text-xs uppercase tracking-wider text-muted-foreground mb-1">Verification fee</div><div className="text-3xl font-bold">RM20.00</div><p className="text-sm text-muted-foreground mt-1">Flat fee per request.</p></div>
+            <div><div className="text-xs uppercase tracking-wider text-muted-foreground mb-1">University share</div><div className="text-3xl font-bold text-success">RM11.00</div><p className="text-sm text-muted-foreground mt-1">60% commission back to issuer.</p></div>
+            <div><div className="text-xs uppercase tracking-wider text-muted-foreground mb-1">Platform + gateway</div><div className="text-3xl font-bold text-primary">RM9.00</div><p className="text-sm text-muted-foreground mt-1">40% platform + RM1 gateway fee.</p></div>
+          </div>
+        </div>
+      </section>
+
+      {/* Security */}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 lg:px-6 grid md:grid-cols-3 gap-6">
+          {[
+            { icon: Lock, title: "Bank-grade encryption", desc: "All data in transit secured with TLS. HMAC SHA-256 signed API calls." },
+            { icon: ShieldCheck, title: "Source-of-truth data", desc: "Certificates sync directly from registrar systems — no middlemen." },
+            { icon: BarChart3, title: "Full audit trail", desc: "Every verification, payment and certificate change is logged." },
+          ].map((s, i) => (
+            <div key={i} className="data-card p-6">
+              <div className="h-10 w-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3"><s.icon className="h-5 w-5" /></div>
+              <h3 className="font-semibold mb-1">{s.title}</h3>
+              <p className="text-sm text-muted-foreground">{s.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section id="faq" className="py-20 bg-secondary/40 border-y">
+        <div className="max-w-3xl mx-auto px-4 lg:px-6">
+          <h2 className="text-3xl lg:text-4xl font-bold text-center mb-10">Frequently asked questions</h2>
+          <Accordion type="single" collapsible className="data-card px-6">
+            <AccordionItem value="1"><AccordionTrigger>Is this an official Government platform?</AccordionTrigger><AccordionContent>VerifyCert is an independent platform that partners with Malaysian universities to provide source-of-truth verification.</AccordionContent></AccordionItem>
+            <AccordionItem value="2"><AccordionTrigger>How long does verification take?</AccordionTrigger><AccordionContent>Verifications are returned instantly once payment is confirmed.</AccordionContent></AccordionItem>
+            <AccordionItem value="3"><AccordionTrigger>How are universities paid?</AccordionTrigger><AccordionContent>Monthly settlement is processed by our finance team and reflected in the university dashboard.</AccordionContent></AccordionItem>
+            <AccordionItem value="4"><AccordionTrigger>Do you support API integration?</AccordionTrigger><AccordionContent>Yes — we offer HMAC-signed sync endpoints and webhook callbacks. See the API Integration page in your university dashboard.</AccordionContent></AccordionItem>
+          </Accordion>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-12 border-t bg-background">
+        <div className="max-w-7xl mx-auto px-4 lg:px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
+          <div className="flex items-center gap-2">
+            <div className="h-7 w-7 rounded-md bg-primary flex items-center justify-center"><ShieldCheck className="h-4 w-4 text-primary-foreground" /></div>
+            <span>© {new Date().getFullYear()} VerifyCert. All rights reserved.</span>
+          </div>
+          <div className="flex items-center gap-6">
+            <Link to="/login" className="hover:text-foreground">Sign in</Link>
+            <Link to="/register" className="hover:text-foreground">Register</Link>
+            <a href="#faq" className="hover:text-foreground">FAQ</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
