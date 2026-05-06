@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { StatusBadge } from "@/components/StatusBadge";
-import { Search, Receipt, Wallet, FileBadge, ArrowRight, Inbox, Calendar, ShieldCheck } from "lucide-react";
+import { Search, Wallet, FileBadge, ArrowRight, Inbox, Calendar, ShieldCheck } from "lucide-react";
 import { formatRM, formatDateTime } from "@/lib/format";
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
 
