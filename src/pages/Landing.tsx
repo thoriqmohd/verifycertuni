@@ -74,44 +74,41 @@ export default function Landing() {
 
       {/* Hero slider */}
       <section className="relative overflow-hidden bg-white border-b">
-        <div className="relative">
+        <div className="relative h-[560px] lg:h-[620px]">
           {SLIDES.map((s, i) => (
             <div
               key={i}
-              className={`${i === idx ? "opacity-100" : "opacity-0 pointer-events-none absolute inset-0"} transition-opacity duration-700`}
+              className={`absolute inset-0 transition-opacity duration-700 ${i === idx ? "opacity-100 z-[1]" : "opacity-0 pointer-events-none z-0"}`}
             >
-              <div className="relative">
-                {/* Background image */}
-                <div className="absolute inset-0">
-                  <img src={s.image} alt="" className="w-full h-full object-cover object-right" />
-                  {/* Left-to-right white fade so text remains readable */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-white/0" />
-                  <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-transparent to-white/40 md:hidden" />
-                </div>
-                <div className="relative max-w-7xl mx-auto px-4 lg:px-6 py-20 lg:py-28">
-                  <div className="max-w-xl text-foreground">
-                    <div className="inline-flex items-center gap-2 rounded-full border border-success/30 bg-success/10 px-3 py-1 text-xs text-success font-medium mb-5">
-                      <BadgeCheck className="h-3.5 w-3.5" /> {s.eyebrow}
-                    </div>
-                    <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.05] mb-5 tracking-tight text-foreground">
-                      {s.title}
-                    </h1>
-                    <p className="text-base lg:text-lg text-muted-foreground mb-7 max-w-lg">
-                      {s.desc}
-                    </p>
-                    <div className="flex flex-wrap gap-3">
-                      <Button size="lg" className="shadow-lg" asChild>
-                        <Link to="/register">Verify a certificate <ArrowRight className="ml-1.5 h-4 w-4" /></Link>
-                      </Button>
-                      <Button size="lg" variant="outline" asChild>
-                        <Link to="/login">Try the demo</Link>
-                      </Button>
-                    </div>
-                    <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
-                      <div className="flex items-center gap-2"><Lock className="h-4 w-4 text-primary" /> HMAC-secured API</div>
-                      <div className="flex items-center gap-2"><QrCode className="h-4 w-4 text-primary" /> QR validation</div>
-                      <div className="flex items-center gap-2"><FileText className="h-4 w-4 text-primary" /> Official PDF reports</div>
-                    </div>
+              {/* Background image — same size & position for every slide */}
+              <div className="absolute inset-0">
+                <img src={s.image} alt="" className="w-full h-full object-cover object-right" />
+                <div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-white/0" />
+                <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-transparent to-white/40 md:hidden" />
+              </div>
+              <div className="relative h-full max-w-7xl mx-auto px-4 lg:px-6 flex items-center">
+                <div className="max-w-xl text-foreground">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-success/30 bg-success/10 px-3 py-1 text-xs text-success font-medium mb-5">
+                    <BadgeCheck className="h-3.5 w-3.5" /> {s.eyebrow}
+                  </div>
+                  <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.05] mb-5 tracking-tight text-foreground">
+                    {s.title}
+                  </h1>
+                  <p className="text-base lg:text-lg text-muted-foreground mb-7 max-w-lg">
+                    {s.desc}
+                  </p>
+                  <div className="flex flex-wrap gap-3">
+                    <Button size="lg" className="shadow-lg" asChild>
+                      <Link to="/register">Verify a certificate <ArrowRight className="ml-1.5 h-4 w-4" /></Link>
+                    </Button>
+                    <Button size="lg" variant="outline" asChild>
+                      <Link to="/login">Try the demo</Link>
+                    </Button>
+                  </div>
+                  <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
+                    <div className="flex items-center gap-2"><Lock className="h-4 w-4 text-primary" /> HMAC-secured API</div>
+                    <div className="flex items-center gap-2"><QrCode className="h-4 w-4 text-primary" /> QR validation</div>
+                    <div className="flex items-center gap-2"><FileText className="h-4 w-4 text-primary" /> Official PDF reports</div>
                   </div>
                 </div>
               </div>
