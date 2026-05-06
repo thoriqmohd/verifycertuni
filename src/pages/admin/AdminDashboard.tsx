@@ -50,13 +50,12 @@ export default function AdminDashboard() {
 
   return (
     <AppLayout title="Overview" breadcrumbs={[{ label: "Admin" }, { label: "Dashboard" }]}>
-      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-6">
-        <StatCard label="Universities" value={stats.universities} icon={<Building2 className="h-5 w-5" />} />
-        <StatCard label="Certificates" value={stats.certificates} icon={<FileBadge className="h-5 w-5" />} />
-        <StatCard label="Verifications" value={stats.verifications} icon={<Search className="h-5 w-5" />} accent="success" />
+      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 mb-6">
+        <StatCard label="Universities" value={stats.universities} icon={<Building2 className="h-5 w-5" />} hint="Active partners" />
+        <StatCard label="Certificates" value={stats.certificates.toLocaleString()} icon={<FileBadge className="h-5 w-5" />} hint="Indexed" />
+        <StatCard label="Verifications" value={stats.verifications.toLocaleString()} icon={<Search className="h-5 w-5" />} accent="success" hint="All time" />
         <StatCard label="Total Revenue" value={formatRM(stats.revenue)} icon={<Wallet className="h-5 w-5" />} accent="success" />
-        <StatCard label="Pending Approvals" value={stats.pending} icon={<AlertCircle className="h-5 w-5" />} accent="warning" />
-        <StatCard label="Active Trend" value={`${trend.length} mo`} icon={<TrendingUp className="h-5 w-5" />} />
+        <StatCard label="Pending Approvals" value={stats.pending} icon={<AlertCircle className="h-5 w-5" />} accent="warning" hint="Universities awaiting review" />
       </div>
 
       <div className="grid lg:grid-cols-2 gap-4 mb-6">
