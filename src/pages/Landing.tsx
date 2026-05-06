@@ -1,8 +1,25 @@
 import { Link } from "react-router-dom";
-import { ShieldCheck, Building2, Search, FileBadge, ArrowRight, Lock, Zap, TrendingUp, BarChart3, BadgeCheck, QrCode, FileText } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ShieldCheck, Building2, Search, FileBadge, ArrowRight, Lock, Zap, TrendingUp, BarChart3, BadgeCheck, QrCode, FileText, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import hero from "@/assets/hero.jpg";
+import banner1 from "@/assets/banner-1.png";
+import banner2 from "@/assets/banner-2.png";
+
+const SLIDES = [
+  {
+    image: banner1,
+    eyebrow: "Trusted by Malaysian universities & employers",
+    title: <>The trusted source-of-truth for <span className="text-success">academic certificates</span> in Malaysia.</>,
+    desc: "VerifyCert connects universities, employers and graduates on one platform — instant, tamper-evident, audit-ready verification reports.",
+  },
+  {
+    image: banner2,
+    eyebrow: "Verify in seconds. Hire with confidence.",
+    title: <>Scan. Verify. <span className="text-success">Done.</span></>,
+    desc: "From QR scan to official PDF report in under 2 seconds — straight from the issuing university's records.",
+  },
+];
 
 const Step = ({ n, icon: Icon, title, desc }: any) => (
   <div className="data-card p-6">
@@ -26,6 +43,13 @@ const Benefit = ({ icon: Icon, title, desc }: any) => (
 );
 
 export default function Landing() {
+  const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setIdx((i) => (i + 1) % SLIDES.length), 6000);
+    return () => clearInterval(t);
+  }, []);
+  const go = (n: number) => setIdx((n + SLIDES.length) % SLIDES.length);
+
   return (
     <div className="min-h-screen bg-background">
       {/* Nav */}
@@ -48,42 +72,82 @@ export default function Landing() {
         </div>
       </header>
 
-      {/* Hero */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 -z-10">
-          <img src={hero} alt="" className="w-full h-full object-cover opacity-80" />
-          <div className="absolute inset-0 bg-gradient-to-br from-[hsl(222_64%_15%)] via-[hsl(222_60%_22%)]/95 to-[hsl(200_70%_30%)]/80" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,hsl(152_60%_42%/0.18),transparent_60%)]" />
-        </div>
-        <div className="max-w-7xl mx-auto px-4 lg:px-6 py-24 lg:py-32">
-          <div className="max-w-3xl text-primary-foreground">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs backdrop-blur mb-6">
-              <BadgeCheck className="h-3.5 w-3.5 text-[hsl(152_70%_55%)]" /> Trusted by Malaysian universities & employers
+      {/* Hero slider */}
+      <section className="relative overflow-hidden bg-white border-b">
+        <div className="relative">
+          {SLIDES.map((s, i) => (
+            <div
+              key={i}
+              className={`${i === idx ? "opacity-100" : "opacity-0 pointer-events-none absolute inset-0"} transition-opacity duration-700`}
+            >
+              <div className="relative">
+                {/* Background image */}
+                <div className="absolute inset-0">
+                  <img src={s.image} alt="" className="w-full h-full object-cover object-right" />
+                  {/* Left-to-right white fade so text remains readable */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-white/0" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-transparent to-white/40 md:hidden" />
+                </div>
+                <div className="relative max-w-7xl mx-auto px-4 lg:px-6 py-20 lg:py-28">
+                  <div className="max-w-xl text-foreground">
+                    <div className="inline-flex items-center gap-2 rounded-full border border-success/30 bg-success/10 px-3 py-1 text-xs text-success font-medium mb-5">
+                      <BadgeCheck className="h-3.5 w-3.5" /> {s.eyebrow}
+                    </div>
+                    <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.05] mb-5 tracking-tight text-foreground">
+                      {s.title}
+                    </h1>
+                    <p className="text-base lg:text-lg text-muted-foreground mb-7 max-w-lg">
+                      {s.desc}
+                    </p>
+                    <div className="flex flex-wrap gap-3">
+                      <Button size="lg" className="shadow-lg" asChild>
+                        <Link to="/register">Verify a certificate <ArrowRight className="ml-1.5 h-4 w-4" /></Link>
+                      </Button>
+                      <Button size="lg" variant="outline" asChild>
+                        <Link to="/login">Try the demo</Link>
+                      </Button>
+                    </div>
+                    <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
+                      <div className="flex items-center gap-2"><Lock className="h-4 w-4 text-primary" /> HMAC-secured API</div>
+                      <div className="flex items-center gap-2"><QrCode className="h-4 w-4 text-primary" /> QR validation</div>
+                      <div className="flex items-center gap-2"><FileText className="h-4 w-4 text-primary" /> Official PDF reports</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <h1 className="text-4xl lg:text-6xl font-bold leading-[1.05] mb-6 tracking-tight">
-              The trusted source-of-truth for <span className="text-[hsl(152_70%_60%)]">academic certificates</span> in Malaysia.
-            </h1>
-            <p className="text-lg lg:text-xl text-white/85 mb-8 max-w-2xl">
-              VerifyCert connects universities, employers and graduates on one platform — instant, tamper-evident, audit-ready verification reports.
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <Button size="lg" variant="secondary" className="shadow-lg" asChild>
-                <Link to="/register">Verify a certificate <ArrowRight className="ml-1.5 h-4 w-4" /></Link>
-              </Button>
-              <Button size="lg" variant="outline" className="bg-white/5 text-white border-white/30 hover:bg-white/15 hover:text-white backdrop-blur" asChild>
-                <Link to="/login">Try the demo</Link>
-              </Button>
-            </div>
-            <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-white/80">
-              <div className="flex items-center gap-2"><Lock className="h-4 w-4" /> HMAC-secured API</div>
-              <div className="flex items-center gap-2"><QrCode className="h-4 w-4" /> QR-based validation</div>
-              <div className="flex items-center gap-2"><FileText className="h-4 w-4" /> Official PDF reports</div>
-            </div>
+          ))}
+
+          {/* Slider controls */}
+          <button
+            aria-label="Previous slide"
+            onClick={() => go(idx - 1)}
+            className="hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 h-10 w-10 items-center justify-center rounded-full bg-white/80 hover:bg-white border shadow-md text-foreground z-10"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+          <button
+            aria-label="Next slide"
+            onClick={() => go(idx + 1)}
+            className="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 h-10 w-10 items-center justify-center rounded-full bg-white/80 hover:bg-white border shadow-md text-foreground z-10"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 z-10">
+            {SLIDES.map((_, i) => (
+              <button
+                key={i}
+                aria-label={`Go to slide ${i + 1}`}
+                onClick={() => go(i)}
+                className={`h-2 rounded-full transition-all ${i === idx ? "w-8 bg-primary" : "w-2 bg-foreground/30 hover:bg-foreground/50"}`}
+              />
+            ))}
           </div>
         </div>
+
         {/* Stats strip */}
-        <div className="relative border-t border-white/10 bg-black/20 backdrop-blur">
-          <div className="max-w-7xl mx-auto px-4 lg:px-6 py-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-primary-foreground">
+        <div className="relative border-t bg-secondary/40">
+          <div className="max-w-7xl mx-auto px-4 lg:px-6 py-6 grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
               { v: "12+", l: "Partner universities" },
               { v: "120k+", l: "Certificates indexed" },
@@ -91,8 +155,8 @@ export default function Landing() {
               { v: "99.99%", l: "Uptime SLA" },
             ].map((s, i) => (
               <div key={i}>
-                <div className="text-2xl lg:text-3xl font-bold">{s.v}</div>
-                <div className="text-xs uppercase tracking-wider text-white/70">{s.l}</div>
+                <div className="text-2xl lg:text-3xl font-bold text-foreground">{s.v}</div>
+                <div className="text-xs uppercase tracking-wider text-muted-foreground">{s.l}</div>
               </div>
             ))}
           </div>
