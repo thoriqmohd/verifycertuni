@@ -57,7 +57,7 @@ export default function AdminUniversities() {
     setBusy(false); setDialogOpen(false); load();
   };
 
-  const setStatus = async (id: string, status: string) => {
+  const setStatus = async (id: string, status: "active" | "pending" | "suspended" | "inactive") => {
     const { error } = await supabase.from("universities").update({ status }).eq("id", id);
     if (error) toast.error(error.message); else { toast.success(`Status set to ${status}`); load(); }
   };
