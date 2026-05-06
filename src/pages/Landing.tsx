@@ -5,6 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import banner1 from "@/assets/banner-1.png";
 import banner2 from "@/assets/banner-2.png";
+import logoUtm from "@/assets/logos/utm.png";
+import logoUm from "@/assets/logos/um.png";
+import logoUkm from "@/assets/logos/ukm.png";
+import logoUsm from "@/assets/logos/usm.png";
+import logoUpm from "@/assets/logos/upm.png";
+import logoUitm from "@/assets/logos/uitm.png";
 
 const SLIDES = [
   {
@@ -161,12 +167,25 @@ export default function Landing() {
       </section>
 
       {/* Logo cloud */}
-      <section className="py-10 border-b">
+      <section className="py-12 border-b bg-white">
         <div className="max-w-7xl mx-auto px-4 lg:px-6">
-          <p className="text-center text-xs uppercase tracking-wider text-muted-foreground mb-6">Built for Malaysia's leading institutions</p>
-          <div className="grid grid-cols-2 md:grid-cols-6 gap-6 items-center justify-items-center text-muted-foreground/70 font-semibold text-sm">
-            {["UTM", "UM", "UKM", "USM", "UPM", "UiTM"].map((u) => (
-              <div key={u} className="flex items-center gap-2 opacity-70 hover:opacity-100 transition-opacity"><Building2 className="h-4 w-4" /> {u}</div>
+          <p className="text-center text-xs uppercase tracking-wider text-muted-foreground mb-8">Built for Malaysia's leading institutions</p>
+          <div className="grid grid-cols-3 md:grid-cols-6 gap-6 items-center justify-items-center">
+            {[
+              { name: "UTM", src: logoUtm },
+              { name: "UM", src: logoUm },
+              { name: "UKM", src: logoUkm },
+              { name: "USM", src: logoUsm },
+              { name: "UPM", src: logoUpm },
+              { name: "UiTM", src: logoUitm },
+            ].map((u) => (
+              <img
+                key={u.name}
+                src={u.src}
+                alt={`${u.name} logo`}
+                loading="lazy"
+                className="h-16 lg:h-20 w-auto object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all"
+              />
             ))}
           </div>
         </div>
