@@ -28,16 +28,20 @@ export default function AdminDashboard() {
       const totalRev = (t.data ?? []).reduce((s, r: any) => s + Number(r.amount), 0);
       setStats({ universities: u.count ?? 0, certificates: c.count ?? 0, verifications: v.count ?? 0, revenue: totalRev, pending: p.count ?? 0 });
 
-      // monthly trend
+      // monthly trend - last 6 months
       const months: Record<string, { month: string; revenue: number; verifications: number }> = {};
+      const now = new Date();
+      for (let i = 5; i >= 0; i--) {
+        const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+        const k = d.toLocaleDateString("en-MY", { month: "short" });
+        months[k] = { month: k, revenue: 0, verifications: 0 };
+      }
       (t.data ?? []).forEach((r: any) => {
         const d = new Date(r.paid_at ?? Date.now());
-        const k = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
-        if (!months[k]) months[k] = { month: k, revenue: 0, verifications: 0 };
-        months[k].revenue += Number(r.amount);
-        months[k].verifications += 1;
+        const k = d.toLocaleDateString("en-MY", { month: "short" });
+        if (months[k]) { months[k].revenue += Number(r.amount); months[k].verifications += 1; }
       });
-      setTrend(Object.values(months).sort((a, b) => a.month.localeCompare(b.month)));
+      setTrend(Object.values(months));
 
       const { data: recentVR } = await supabase.from("verification_requests").select("*, certificate:certificates(student_name, certificate_number), company:companies(company_name)").order("created_at", { ascending: false }).limit(5);
       setRecent(recentVR ?? []);
