@@ -3,15 +3,10 @@ import { useEffect, useState } from "react";
 import { ShieldCheck, Building2, Search, FileBadge, ArrowRight, Lock, Zap, TrendingUp, BarChart3, BadgeCheck, QrCode, FileText, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { supabase } from "@/integrations/supabase/client";
 import banner1 from "@/assets/banner-1.png";
 import banner2 from "@/assets/banner-2.png";
 import banner3 from "@/assets/banner-3.png";
-import logoUtm from "@/assets/logos/utm.png";
-import logoUm from "@/assets/logos/um.png";
-import logoUkm from "@/assets/logos/ukm.png";
-import logoUsm from "@/assets/logos/usm.png";
-import logoUpm from "@/assets/logos/upm.png";
-import logoUitm from "@/assets/logos/uitm.png";
 
 const SLIDES = [
   {
@@ -57,6 +52,10 @@ const Benefit = ({ icon: Icon, title, desc }: any) => (
 
 export default function Landing() {
   const [idx, setIdx] = useState(0);
+  const [unis, setUnis] = useState<{ id: string; name: string; logo_url: string | null }[]>([]);
+  useEffect(() => {
+    supabase.from("universities").select("id,name,logo_url").eq("status", "active").then(({ data }) => setUnis(data ?? []));
+  }, []);
   useEffect(() => {
     const t = setInterval(() => setIdx((i) => (i + 1) % SLIDES.length), 6000);
     return () => clearInterval(t);
