@@ -51,25 +51,62 @@ export default function Landing() {
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 -z-10">
-          <img src={hero} alt="" className="w-full h-full object-cover opacity-90" />
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/80 to-primary/40" />
+          <img src={hero} alt="" className="w-full h-full object-cover opacity-80" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[hsl(222_64%_15%)] via-[hsl(222_60%_22%)]/95 to-[hsl(200_70%_30%)]/80" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,hsl(152_60%_42%/0.18),transparent_60%)]" />
         </div>
         <div className="max-w-7xl mx-auto px-4 lg:px-6 py-24 lg:py-32">
-          <div className="max-w-2xl text-primary-foreground">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs backdrop-blur mb-5">
-              <BadgeCheck className="h-3.5 w-3.5" /> Trusted by Malaysian universities
+          <div className="max-w-3xl text-primary-foreground">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs backdrop-blur mb-6">
+              <BadgeCheck className="h-3.5 w-3.5 text-[hsl(152_70%_55%)]" /> Trusted by Malaysian universities & employers
             </div>
-            <h1 className="text-4xl lg:text-6xl font-bold leading-tight mb-5">Trusted Academic Certificate Verification Platform</h1>
-            <p className="text-lg lg:text-xl text-white/85 mb-8">Helping universities, employers and graduates verify academic credentials securely, quickly and transparently.</p>
+            <h1 className="text-4xl lg:text-6xl font-bold leading-[1.05] mb-6 tracking-tight">
+              The trusted source-of-truth for <span className="text-[hsl(152_70%_60%)]">academic certificates</span> in Malaysia.
+            </h1>
+            <p className="text-lg lg:text-xl text-white/85 mb-8 max-w-2xl">
+              VerifyCert connects universities, employers and graduates on one platform — instant, tamper-evident, audit-ready verification reports.
+            </p>
             <div className="flex flex-wrap gap-3">
-              <Button size="lg" variant="secondary" asChild><Link to="/register">Verify Certificate <ArrowRight className="ml-1.5 h-4 w-4" /></Link></Button>
-              <Button size="lg" variant="outline" className="bg-white/10 text-white border-white/30 hover:bg-white/20 hover:text-white" asChild><Link to="/login">University Demo</Link></Button>
+              <Button size="lg" variant="secondary" className="shadow-lg" asChild>
+                <Link to="/register">Verify a certificate <ArrowRight className="ml-1.5 h-4 w-4" /></Link>
+              </Button>
+              <Button size="lg" variant="outline" className="bg-white/5 text-white border-white/30 hover:bg-white/15 hover:text-white backdrop-blur" asChild>
+                <Link to="/login">Try the demo</Link>
+              </Button>
             </div>
             <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-white/80">
               <div className="flex items-center gap-2"><Lock className="h-4 w-4" /> HMAC-secured API</div>
               <div className="flex items-center gap-2"><QrCode className="h-4 w-4" /> QR-based validation</div>
               <div className="flex items-center gap-2"><FileText className="h-4 w-4" /> Official PDF reports</div>
             </div>
+          </div>
+        </div>
+        {/* Stats strip */}
+        <div className="relative border-t border-white/10 bg-black/20 backdrop-blur">
+          <div className="max-w-7xl mx-auto px-4 lg:px-6 py-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-primary-foreground">
+            {[
+              { v: "12+", l: "Partner universities" },
+              { v: "120k+", l: "Certificates indexed" },
+              { v: "<2s", l: "Avg. verification time" },
+              { v: "99.99%", l: "Uptime SLA" },
+            ].map((s, i) => (
+              <div key={i}>
+                <div className="text-2xl lg:text-3xl font-bold">{s.v}</div>
+                <div className="text-xs uppercase tracking-wider text-white/70">{s.l}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Logo cloud */}
+      <section className="py-10 border-b">
+        <div className="max-w-7xl mx-auto px-4 lg:px-6">
+          <p className="text-center text-xs uppercase tracking-wider text-muted-foreground mb-6">Built for Malaysia's leading institutions</p>
+          <div className="grid grid-cols-2 md:grid-cols-6 gap-6 items-center justify-items-center text-muted-foreground/70 font-semibold text-sm">
+            {["UTM", "UM", "UKM", "USM", "UPM", "UiTM"].map((u) => (
+              <div key={u} className="flex items-center gap-2 opacity-70 hover:opacity-100 transition-opacity"><Building2 className="h-4 w-4" /> {u}</div>
+            ))}
           </div>
         </div>
       </section>
@@ -166,6 +203,25 @@ export default function Landing() {
             <AccordionItem value="3"><AccordionTrigger>How are universities paid?</AccordionTrigger><AccordionContent>Monthly settlement is processed by our finance team and reflected in the university dashboard.</AccordionContent></AccordionItem>
             <AccordionItem value="4"><AccordionTrigger>Do you support API integration?</AccordionTrigger><AccordionContent>Yes — we offer HMAC-signed sync endpoints and webhook callbacks. See the API Integration page in your university dashboard.</AccordionContent></AccordionItem>
           </Accordion>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-20">
+        <div className="max-w-5xl mx-auto px-4 lg:px-6">
+          <div className="rounded-2xl gradient-hero text-primary-foreground p-10 lg:p-14 relative overflow-hidden">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,hsl(152_70%_50%/0.25),transparent_50%)]" />
+            <div className="relative grid lg:grid-cols-2 gap-8 items-center">
+              <div>
+                <h2 className="text-3xl lg:text-4xl font-bold mb-3">Ready to verify with confidence?</h2>
+                <p className="text-white/85">Join hundreds of HR teams making faster, fraud-proof hiring decisions.</p>
+              </div>
+              <div className="flex flex-wrap gap-3 lg:justify-end">
+                <Button size="lg" variant="secondary" asChild><Link to="/register">Get started free</Link></Button>
+                <Button size="lg" variant="outline" className="bg-white/10 text-white border-white/30 hover:bg-white/20 hover:text-white" asChild><Link to="/login">Try demo</Link></Button>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

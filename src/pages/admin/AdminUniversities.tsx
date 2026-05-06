@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AppLayout } from "@/components/AppLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -12,9 +12,11 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, Dialog
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Plus, Search, MoreHorizontal, Copy, KeyRound, Loader2 } from "lucide-react";
+import { Plus, Search, MoreHorizontal, Copy, KeyRound, Loader2, Building2 } from "lucide-react";
 import { toast } from "sonner";
 import { generateApiKey, generateApiSecret, formatDate } from "@/lib/format";
+import { Paginator, usePaged } from "@/components/Pagination";
+import { EmptyState } from "@/components/StatCard";
 
 const empty = { name: "", registration_no: "", contact_person: "", contact_email: "", address: "", commission_rate: 40 };
 
@@ -26,6 +28,7 @@ export default function AdminUniversities() {
   const [editId, setEditId] = useState<string | null>(null);
   const [f, setF] = useState<any>(empty);
   const [busy, setBusy] = useState(false);
+  const [page, setPage] = useState(1);
 
   const load = async () => {
     const { data } = await supabase.from("universities").select("*").order("created_at", { ascending: false });
@@ -33,7 +36,9 @@ export default function AdminUniversities() {
   };
   useEffect(() => { load(); }, []);
 
-  const filtered = rows.filter((r) => (filter === "all" || r.status === filter) && r.name.toLowerCase().includes(q.toLowerCase()));
+  const filtered = useMemo(() => rows.filter((r) => (filter === "all" || r.status === filter) && r.name.toLowerCase().includes(q.toLowerCase())), [rows, q, filter]);
+  useEffect(() => { setPage(1); }, [q, filter]);
+  const { slice, pages, page: pg, total } = usePaged(filtered, page, 10);
 
   const openNew = () => { setEditId(null); setF(empty); setDialogOpen(true); };
   const openEdit = (r: any) => { setEditId(r.id); setF({ ...r }); setDialogOpen(true); };
@@ -112,46 +117,55 @@ export default function AdminUniversities() {
             </Dialog>
           </div>
 
-          <Table>
-            <TableHeader><TableRow><TableHead>University</TableHead><TableHead>Reg no.</TableHead><TableHead>Commission</TableHead><TableHead>API key</TableHead><TableHead>Status</TableHead><TableHead>Created</TableHead><TableHead></TableHead></TableRow></TableHeader>
-            <TableBody>
-              {filtered.map((r) => (
-                <TableRow key={r.id}>
-                  <TableCell>
-                    <div className="font-medium">{r.name}</div>
-                    <div className="text-xs text-muted-foreground">{r.contact_email}</div>
-                  </TableCell>
-                  <TableCell className="text-sm">{r.registration_no}</TableCell>
-                  <TableCell>{r.commission_rate}%</TableCell>
-                  <TableCell>
-                    <button onClick={() => { navigator.clipboard.writeText(r.api_key); toast.success("API key copied"); }} className="font-mono text-xs flex items-center gap-1.5 hover:text-primary">
-                      {r.api_key?.slice(0, 16)}… <Copy className="h-3 w-3" />
-                    </button>
-                  </TableCell>
-                  <TableCell><StatusBadge status={r.status} /></TableCell>
-                  <TableCell className="text-sm text-muted-foreground">{formatDate(r.created_at)}</TableCell>
-                  <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild><Button variant="ghost" size="icon"><MoreHorizontal className="h-4 w-4" /></Button></DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => openEdit(r)}>Edit</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => regenKey(r.id)}><KeyRound className="h-3.5 w-3.5 mr-2" />Regenerate API key</DropdownMenuItem>
-                        {r.status !== "active" && <DropdownMenuItem onClick={() => setStatus(r.id, "active")}>Approve</DropdownMenuItem>}
-                        {r.status !== "suspended" && <DropdownMenuItem onClick={() => setStatus(r.id, "suspended")}>Suspend</DropdownMenuItem>}
-                        <AlertDialog>
-                          <AlertDialogTrigger asChild><DropdownMenuItem className="text-destructive" onSelect={(e) => e.preventDefault()}>Delete</DropdownMenuItem></AlertDialogTrigger>
-                          <AlertDialogContent>
-                            <AlertDialogHeader><AlertDialogTitle>Delete university?</AlertDialogTitle><AlertDialogDescription>This will remove all certificates and verification requests linked to this university.</AlertDialogDescription></AlertDialogHeader>
-                            <AlertDialogFooter><AlertDialogCancel>Cancel</AlertDialogCancel><AlertDialogAction onClick={() => remove(r.id)}>Delete</AlertDialogAction></AlertDialogFooter>
-                          </AlertDialogContent>
-                        </AlertDialog>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+          {filtered.length === 0 ? (
+            <EmptyState icon={<Building2 className="h-5 w-5" />} title="No universities yet" description="Add your first partner university to get started." />
+          ) : (
+            <>
+              <div className="rounded-lg border overflow-hidden">
+                <Table>
+                  <TableHeader><TableRow><TableHead>University</TableHead><TableHead className="hidden md:table-cell">Reg no.</TableHead><TableHead>Commission</TableHead><TableHead className="hidden lg:table-cell">API key</TableHead><TableHead>Status</TableHead><TableHead className="hidden md:table-cell">Created</TableHead><TableHead></TableHead></TableRow></TableHeader>
+                  <TableBody>
+                    {slice.map((r) => (
+                      <TableRow key={r.id}>
+                        <TableCell>
+                          <div className="font-medium">{r.name}</div>
+                          <div className="text-xs text-muted-foreground">{r.contact_email}</div>
+                        </TableCell>
+                        <TableCell className="text-sm hidden md:table-cell">{r.registration_no}</TableCell>
+                        <TableCell>{r.commission_rate}%</TableCell>
+                        <TableCell className="hidden lg:table-cell">
+                          <button onClick={() => { navigator.clipboard.writeText(r.api_key); toast.success("API key copied"); }} className="font-mono text-xs flex items-center gap-1.5 hover:text-primary">
+                            {r.api_key?.slice(0, 16)}… <Copy className="h-3 w-3" />
+                          </button>
+                        </TableCell>
+                        <TableCell><StatusBadge status={r.status} /></TableCell>
+                        <TableCell className="text-sm text-muted-foreground hidden md:table-cell">{formatDate(r.created_at)}</TableCell>
+                        <TableCell>
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild><Button variant="ghost" size="icon"><MoreHorizontal className="h-4 w-4" /></Button></DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem onClick={() => openEdit(r)}>Edit</DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => regenKey(r.id)}><KeyRound className="h-3.5 w-3.5 mr-2" />Regenerate API key</DropdownMenuItem>
+                              {r.status !== "active" && <DropdownMenuItem onClick={() => setStatus(r.id, "active")}>Approve</DropdownMenuItem>}
+                              {r.status !== "suspended" && <DropdownMenuItem onClick={() => setStatus(r.id, "suspended")}>Suspend</DropdownMenuItem>}
+                              <AlertDialog>
+                                <AlertDialogTrigger asChild><DropdownMenuItem className="text-destructive" onSelect={(e) => e.preventDefault()}>Delete</DropdownMenuItem></AlertDialogTrigger>
+                                <AlertDialogContent>
+                                  <AlertDialogHeader><AlertDialogTitle>Delete university?</AlertDialogTitle><AlertDialogDescription>This will remove all certificates and verification requests linked to this university.</AlertDialogDescription></AlertDialogHeader>
+                                  <AlertDialogFooter><AlertDialogCancel>Cancel</AlertDialogCancel><AlertDialogAction onClick={() => remove(r.id)}>Delete</AlertDialogAction></AlertDialogFooter>
+                                </AlertDialogContent>
+                              </AlertDialog>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+              <Paginator page={pg} pages={pages} total={total} onChange={setPage} />
+            </>
+          )}
         </CardContent>
       </Card>
     </AppLayout>

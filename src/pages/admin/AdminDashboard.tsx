@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { AppLayout } from "@/components/AppLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { StatCard, EmptyState } from "@/components/StatCard";
-import { Building2, FileBadge, Search, Wallet, AlertCircle, TrendingUp } from "lucide-react";
+import { Building2, FileBadge, Search, Wallet, AlertCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { StatusBadge } from "@/components/StatusBadge";
@@ -28,16 +28,20 @@ export default function AdminDashboard() {
       const totalRev = (t.data ?? []).reduce((s, r: any) => s + Number(r.amount), 0);
       setStats({ universities: u.count ?? 0, certificates: c.count ?? 0, verifications: v.count ?? 0, revenue: totalRev, pending: p.count ?? 0 });
 
-      // monthly trend
+      // monthly trend - last 6 months
       const months: Record<string, { month: string; revenue: number; verifications: number }> = {};
+      const now = new Date();
+      for (let i = 5; i >= 0; i--) {
+        const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+        const k = d.toLocaleDateString("en-MY", { month: "short" });
+        months[k] = { month: k, revenue: 0, verifications: 0 };
+      }
       (t.data ?? []).forEach((r: any) => {
         const d = new Date(r.paid_at ?? Date.now());
-        const k = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
-        if (!months[k]) months[k] = { month: k, revenue: 0, verifications: 0 };
-        months[k].revenue += Number(r.amount);
-        months[k].verifications += 1;
+        const k = d.toLocaleDateString("en-MY", { month: "short" });
+        if (months[k]) { months[k].revenue += Number(r.amount); months[k].verifications += 1; }
       });
-      setTrend(Object.values(months).sort((a, b) => a.month.localeCompare(b.month)));
+      setTrend(Object.values(months));
 
       const { data: recentVR } = await supabase.from("verification_requests").select("*, certificate:certificates(student_name, certificate_number), company:companies(company_name)").order("created_at", { ascending: false }).limit(5);
       setRecent(recentVR ?? []);
@@ -50,13 +54,12 @@ export default function AdminDashboard() {
 
   return (
     <AppLayout title="Overview" breadcrumbs={[{ label: "Admin" }, { label: "Dashboard" }]}>
-      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-6">
-        <StatCard label="Universities" value={stats.universities} icon={<Building2 className="h-5 w-5" />} />
-        <StatCard label="Certificates" value={stats.certificates} icon={<FileBadge className="h-5 w-5" />} />
-        <StatCard label="Verifications" value={stats.verifications} icon={<Search className="h-5 w-5" />} accent="success" />
+      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 mb-6">
+        <StatCard label="Universities" value={stats.universities} icon={<Building2 className="h-5 w-5" />} hint="Active partners" />
+        <StatCard label="Certificates" value={stats.certificates.toLocaleString()} icon={<FileBadge className="h-5 w-5" />} hint="Indexed" />
+        <StatCard label="Verifications" value={stats.verifications.toLocaleString()} icon={<Search className="h-5 w-5" />} accent="success" hint="All time" />
         <StatCard label="Total Revenue" value={formatRM(stats.revenue)} icon={<Wallet className="h-5 w-5" />} accent="success" />
-        <StatCard label="Pending Approvals" value={stats.pending} icon={<AlertCircle className="h-5 w-5" />} accent="warning" />
-        <StatCard label="Active Trend" value={`${trend.length} mo`} icon={<TrendingUp className="h-5 w-5" />} />
+        <StatCard label="Pending Approvals" value={stats.pending} icon={<AlertCircle className="h-5 w-5" />} accent="warning" hint="Universities awaiting review" />
       </div>
 
       <div className="grid lg:grid-cols-2 gap-4 mb-6">
