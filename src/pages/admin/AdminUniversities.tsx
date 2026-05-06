@@ -117,6 +117,13 @@ export default function AdminUniversities() {
                   <div><Label>Contact person</Label><Input value={f.contact_person ?? ""} onChange={(e) => setF({ ...f, contact_person: e.target.value })} /></div>
                   <div><Label>Contact email</Label><Input value={f.contact_email ?? ""} onChange={(e) => setF({ ...f, contact_email: e.target.value })} /></div>
                   <div><Label>Address</Label><Textarea rows={2} value={f.address ?? ""} onChange={(e) => setF({ ...f, address: e.target.value })} /></div>
+                  <div>
+                    <Label>University logo</Label>
+                    <div className="flex items-center gap-3 mt-1">
+                      {f.logo_url && <img src={f.logo_url} alt="logo" className="h-12 w-12 object-contain rounded border bg-white p-1" />}
+                      <Input type="file" accept="image/*" onChange={(e) => { const file = e.target.files?.[0]; if (file) uploadLogo(file); }} />
+                    </div>
+                  </div>
                 </div>
                 <DialogFooter>
                   <Button variant="outline" onClick={() => setDialogOpen(false)}>Cancel</Button>
