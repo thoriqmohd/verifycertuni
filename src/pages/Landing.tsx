@@ -172,30 +172,33 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Logo cloud */}
-      <section className="py-12 border-b bg-white">
-        <div className="max-w-7xl mx-auto px-4 lg:px-6">
-          <p className="text-center text-xs uppercase tracking-wider text-muted-foreground mb-8">Built for Malaysia's leading institutions</p>
-          <div className="grid grid-cols-3 md:grid-cols-6 gap-6 items-center justify-items-center">
-            {[
-              { name: "UTM", src: logoUtm },
-              { name: "UM", src: logoUm },
-              { name: "UKM", src: logoUkm },
-              { name: "USM", src: logoUsm },
-              { name: "UPM", src: logoUpm },
-              { name: "UiTM", src: logoUitm },
-            ].map((u) => (
-              <img
-                key={u.name}
-                src={u.src}
-                alt={`${u.name} logo`}
-                loading="lazy"
-                className="h-16 lg:h-20 w-auto object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all"
-              />
-            ))}
+      {/* Logo cloud — sourced from active universities in admin */}
+      {unis.length > 0 && (
+        <section className="py-12 border-b bg-white">
+          <div className="max-w-7xl mx-auto px-4 lg:px-6">
+            <p className="text-center text-xs uppercase tracking-wider text-muted-foreground mb-8">Built for Malaysia's leading institutions</p>
+            <div className="flex flex-wrap gap-8 items-center justify-center">
+              {unis.map((u) => (
+                <div key={u.id} className="flex flex-col items-center gap-2 w-32">
+                  {u.logo_url ? (
+                    <img
+                      src={u.logo_url}
+                      alt={`${u.name} logo`}
+                      loading="lazy"
+                      className="h-16 lg:h-20 w-auto object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all"
+                    />
+                  ) : (
+                    <div className="h-16 lg:h-20 w-20 rounded-lg bg-muted flex items-center justify-center text-muted-foreground">
+                      <Building2 className="h-7 w-7" />
+                    </div>
+                  )}
+                  <span className="text-xs text-muted-foreground text-center line-clamp-2">{u.name}</span>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* How it works */}
       <section id="how" className="py-20">
