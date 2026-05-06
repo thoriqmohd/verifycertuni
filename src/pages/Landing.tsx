@@ -3,15 +3,10 @@ import { useEffect, useState } from "react";
 import { ShieldCheck, Building2, Search, FileBadge, ArrowRight, Lock, Zap, TrendingUp, BarChart3, BadgeCheck, QrCode, FileText, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { supabase } from "@/integrations/supabase/client";
 import banner1 from "@/assets/banner-1.png";
 import banner2 from "@/assets/banner-2.png";
 import banner3 from "@/assets/banner-3.png";
-import logoUtm from "@/assets/logos/utm.png";
-import logoUm from "@/assets/logos/um.png";
-import logoUkm from "@/assets/logos/ukm.png";
-import logoUsm from "@/assets/logos/usm.png";
-import logoUpm from "@/assets/logos/upm.png";
-import logoUitm from "@/assets/logos/uitm.png";
 
 const SLIDES = [
   {
@@ -57,6 +52,10 @@ const Benefit = ({ icon: Icon, title, desc }: any) => (
 
 export default function Landing() {
   const [idx, setIdx] = useState(0);
+  const [unis, setUnis] = useState<{ id: string; name: string; logo_url: string | null }[]>([]);
+  useEffect(() => {
+    supabase.from("universities").select("id,name,logo_url").eq("status", "active").then(({ data }) => setUnis(data ?? []));
+  }, []);
   useEffect(() => {
     const t = setInterval(() => setIdx((i) => (i + 1) % SLIDES.length), 6000);
     return () => clearInterval(t);
@@ -173,30 +172,33 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Logo cloud */}
-      <section className="py-12 border-b bg-white">
-        <div className="max-w-7xl mx-auto px-4 lg:px-6">
-          <p className="text-center text-xs uppercase tracking-wider text-muted-foreground mb-8">Built for Malaysia's leading institutions</p>
-          <div className="grid grid-cols-3 md:grid-cols-6 gap-6 items-center justify-items-center">
-            {[
-              { name: "UTM", src: logoUtm },
-              { name: "UM", src: logoUm },
-              { name: "UKM", src: logoUkm },
-              { name: "USM", src: logoUsm },
-              { name: "UPM", src: logoUpm },
-              { name: "UiTM", src: logoUitm },
-            ].map((u) => (
-              <img
-                key={u.name}
-                src={u.src}
-                alt={`${u.name} logo`}
-                loading="lazy"
-                className="h-16 lg:h-20 w-auto object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all"
-              />
-            ))}
+      {/* Logo cloud — sourced from active universities in admin */}
+      {unis.length > 0 && (
+        <section className="py-12 border-b bg-white">
+          <div className="max-w-7xl mx-auto px-4 lg:px-6">
+            <p className="text-center text-xs uppercase tracking-wider text-muted-foreground mb-8">Built for Malaysia's leading institutions</p>
+            <div className="flex flex-wrap gap-8 items-center justify-center">
+              {unis.map((u) => (
+                <div key={u.id} className="flex flex-col items-center gap-2 w-32">
+                  {u.logo_url ? (
+                    <img
+                      src={u.logo_url}
+                      alt={`${u.name} logo`}
+                      loading="lazy"
+                      className="h-16 lg:h-20 w-auto object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all"
+                    />
+                  ) : (
+                    <div className="h-16 lg:h-20 w-20 rounded-lg bg-muted flex items-center justify-center text-muted-foreground">
+                      <Building2 className="h-7 w-7" />
+                    </div>
+                  )}
+                  <span className="text-xs text-muted-foreground text-center line-clamp-2">{u.name}</span>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* How it works */}
       <section id="how" className="py-20">

@@ -182,6 +182,10 @@ export type Database = {
       }
       payment_settings: {
         Row: {
+          billplz_api_key: string | null
+          billplz_collection_id: string | null
+          billplz_sandbox: boolean
+          billplz_x_signature: string | null
           created_at: string
           id: string
           payment_gateway_name: string
@@ -190,6 +194,10 @@ export type Database = {
           verification_fee: number
         }
         Insert: {
+          billplz_api_key?: string | null
+          billplz_collection_id?: string | null
+          billplz_sandbox?: boolean
+          billplz_x_signature?: string | null
           created_at?: string
           id?: string
           payment_gateway_name?: string
@@ -198,6 +206,10 @@ export type Database = {
           verification_fee?: number
         }
         Update: {
+          billplz_api_key?: string | null
+          billplz_collection_id?: string | null
+          billplz_sandbox?: boolean
+          billplz_x_signature?: string | null
           created_at?: string
           id?: string
           payment_gateway_name?: string

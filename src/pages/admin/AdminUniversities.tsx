@@ -18,7 +18,7 @@ import { generateApiKey, generateApiSecret, formatDate } from "@/lib/format";
 import { Paginator, usePaged } from "@/components/Pagination";
 import { EmptyState } from "@/components/StatCard";
 
-const empty = { name: "", registration_no: "", contact_person: "", contact_email: "", address: "", commission_rate: 40 };
+const empty = { name: "", registration_no: "", contact_person: "", contact_email: "", address: "", commission_rate: 40, logo_url: "" };
 
 export default function AdminUniversities() {
   const [rows, setRows] = useState<any[]>([]);
@@ -43,18 +43,27 @@ export default function AdminUniversities() {
   const openNew = () => { setEditId(null); setF(empty); setDialogOpen(true); };
   const openEdit = (r: any) => { setEditId(r.id); setF({ ...r }); setDialogOpen(true); };
 
+  const uploadLogo = async (file: File) => {
+    const path = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.\-_]/g, "_")}`;
+    const { error: upErr } = await supabase.storage.from("university-logos").upload(path, file, { upsert: true });
+    if (upErr) { toast.error(upErr.message); return; }
+    const { data } = supabase.storage.from("university-logos").getPublicUrl(path);
+    setF((prev: any) => ({ ...prev, logo_url: data.publicUrl }));
+    toast.success("Logo uploaded");
+  };
+
   const save = async () => {
     setBusy(true);
     if (editId) {
       const { error } = await supabase.from("universities").update({
         name: f.name, registration_no: f.registration_no, contact_person: f.contact_person,
-        contact_email: f.contact_email, address: f.address, commission_rate: Number(f.commission_rate),
+        contact_email: f.contact_email, address: f.address, commission_rate: Number(f.commission_rate), logo_url: f.logo_url,
       }).eq("id", editId);
       if (error) toast.error(error.message); else toast.success("University updated");
     } else {
       const { error } = await supabase.from("universities").insert({
         name: f.name, registration_no: f.registration_no, contact_person: f.contact_person,
-        contact_email: f.contact_email, address: f.address, commission_rate: Number(f.commission_rate),
+        contact_email: f.contact_email, address: f.address, commission_rate: Number(f.commission_rate), logo_url: f.logo_url,
         api_key: generateApiKey(), api_secret: generateApiSecret(), status: "pending",
       });
       if (error) toast.error(error.message); else toast.success("University added");
@@ -108,6 +117,13 @@ export default function AdminUniversities() {
                   <div><Label>Contact person</Label><Input value={f.contact_person ?? ""} onChange={(e) => setF({ ...f, contact_person: e.target.value })} /></div>
                   <div><Label>Contact email</Label><Input value={f.contact_email ?? ""} onChange={(e) => setF({ ...f, contact_email: e.target.value })} /></div>
                   <div><Label>Address</Label><Textarea rows={2} value={f.address ?? ""} onChange={(e) => setF({ ...f, address: e.target.value })} /></div>
+                  <div>
+                    <Label>University logo</Label>
+                    <div className="flex items-center gap-3 mt-1">
+                      {f.logo_url && <img src={f.logo_url} alt="logo" className="h-12 w-12 object-contain rounded border bg-white p-1" />}
+                      <Input type="file" accept="image/*" onChange={(e) => { const file = e.target.files?.[0]; if (file) uploadLogo(file); }} />
+                    </div>
+                  </div>
                 </div>
                 <DialogFooter>
                   <Button variant="outline" onClick={() => setDialogOpen(false)}>Cancel</Button>
@@ -128,8 +144,17 @@ export default function AdminUniversities() {
                     {slice.map((r) => (
                       <TableRow key={r.id}>
                         <TableCell>
-                          <div className="font-medium">{r.name}</div>
-                          <div className="text-xs text-muted-foreground">{r.contact_email}</div>
+                          <div className="flex items-center gap-3">
+                            {r.logo_url ? (
+                              <img src={r.logo_url} alt={`${r.name} logo`} className="h-9 w-9 object-contain rounded border bg-white p-0.5" />
+                            ) : (
+                              <div className="h-9 w-9 rounded border bg-muted flex items-center justify-center text-muted-foreground"><Building2 className="h-4 w-4" /></div>
+                            )}
+                            <div>
+                              <div className="font-medium">{r.name}</div>
+                              <div className="text-xs text-muted-foreground">{r.contact_email}</div>
+                            </div>
+                          </div>
                         </TableCell>
                         <TableCell className="text-sm hidden md:table-cell">{r.registration_no}</TableCell>
                         <TableCell>{r.commission_rate}%</TableCell>
