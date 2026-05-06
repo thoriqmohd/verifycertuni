@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { ShieldCheck, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { roleHomePath, AppRole } from "@/contexts/AuthContext";
+import loginBg from "@/assets/login-bg.jpg";
 
 const demoButtons: { role: AppRole; label: string }[] = [
   { role: "super_admin", label: "Super Admin" },
@@ -56,8 +57,11 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-secondary/40">
-      <div className="w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center p-4 relative">
+      <img src={loginBg} alt="" aria-hidden className="absolute inset-0 w-full h-full object-cover" />
+      <div className="absolute inset-0 bg-gradient-to-br from-background/90 via-background/80 to-primary/40" />
+      <div className="absolute inset-0 bg-black/50" />
+      <div className="w-full max-w-md relative z-10">
         <Link to="/" className="flex items-center justify-center gap-2 mb-6">
           <div className="h-10 w-10 rounded-lg bg-primary flex items-center justify-center"><ShieldCheck className="h-5 w-5 text-primary-foreground" /></div>
           <span className="font-bold text-xl">VerifyCert</span>
