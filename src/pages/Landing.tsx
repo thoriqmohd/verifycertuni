@@ -43,6 +43,13 @@ const Benefit = ({ icon: Icon, title, desc }: any) => (
 );
 
 export default function Landing() {
+  const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setIdx((i) => (i + 1) % SLIDES.length), 6000);
+    return () => clearInterval(t);
+  }, []);
+  const go = (n: number) => setIdx((n + SLIDES.length) % SLIDES.length);
+
   return (
     <div className="min-h-screen bg-background">
       {/* Nav */}
