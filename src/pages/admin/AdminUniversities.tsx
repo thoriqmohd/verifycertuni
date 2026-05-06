@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AppLayout } from "@/components/AppLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -12,9 +12,11 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, Dialog
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Plus, Search, MoreHorizontal, Copy, KeyRound, Loader2 } from "lucide-react";
+import { Plus, Search, MoreHorizontal, Copy, KeyRound, Loader2, Building2 } from "lucide-react";
 import { toast } from "sonner";
 import { generateApiKey, generateApiSecret, formatDate } from "@/lib/format";
+import { Paginator, usePaged } from "@/components/Pagination";
+import { EmptyState } from "@/components/StatCard";
 
 const empty = { name: "", registration_no: "", contact_person: "", contact_email: "", address: "", commission_rate: 40 };
 
