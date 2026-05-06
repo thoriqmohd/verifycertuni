@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { AppLayout } from "@/components/AppLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { StatCard, EmptyState } from "@/components/StatCard";
-import { Building2, FileBadge, Search, Wallet, AlertCircle, TrendingUp } from "lucide-react";
+import { Building2, FileBadge, Search, Wallet, AlertCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { StatusBadge } from "@/components/StatusBadge";
