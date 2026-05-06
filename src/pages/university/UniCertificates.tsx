@@ -26,6 +26,7 @@ export default function UniCertificates() {
   const [q, setQ] = useState(""); const [status, setStatus] = useState("all");
   const [open, setOpen] = useState(false); const [editId, setEditId] = useState<string | null>(null);
   const [f, setF] = useState<any>(empty); const [busy, setBusy] = useState(false);
+  const [page, setPage] = useState(1);
 
   const load = async () => {
     if (!profile?.university_id) return;
@@ -34,7 +35,9 @@ export default function UniCertificates() {
   };
   useEffect(() => { load(); }, [profile?.university_id]);
 
-  const filtered = rows.filter((r) => (status === "all" || r.certificate_status === status) && (q === "" || r.student_name.toLowerCase().includes(q.toLowerCase()) || r.certificate_number.toLowerCase().includes(q.toLowerCase())));
+  const filtered = useMemo(() => rows.filter((r) => (status === "all" || r.certificate_status === status) && (q === "" || r.student_name.toLowerCase().includes(q.toLowerCase()) || r.certificate_number.toLowerCase().includes(q.toLowerCase()))), [rows, q, status]);
+  useEffect(() => { setPage(1); }, [q, status]);
+  const { slice, pages, page: pg, total } = usePaged(filtered, page, 10);
 
   const openNew = () => { setEditId(null); setF(empty); setOpen(true); };
   const openEdit = (r: any) => { setEditId(r.id); setF({ ...r, graduation_date: r.graduation_date ?? "", convocation_date: r.convocation_date ?? "" }); setOpen(true); };
