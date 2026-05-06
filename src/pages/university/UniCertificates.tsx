@@ -108,40 +108,49 @@ export default function UniCertificates() {
           </Dialog>
         </div>
 
-        <Table>
-          <TableHeader><TableRow><TableHead>Certificate no.</TableHead><TableHead>Student</TableHead><TableHead>Programme</TableHead><TableHead>Award</TableHead><TableHead>Status</TableHead><TableHead></TableHead></TableRow></TableHeader>
-          <TableBody>
-            {filtered.map((r) => (
-              <TableRow key={r.id}>
-                <TableCell className="font-mono text-xs">{r.certificate_number}</TableCell>
-                <TableCell>{r.student_name}</TableCell>
-                <TableCell className="text-sm">{r.programme_name}</TableCell>
-                <TableCell className="text-sm">{r.award_type}</TableCell>
-                <TableCell><StatusBadge status={r.certificate_status} /></TableCell>
-                <TableCell>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild><Button variant="ghost" size="icon"><MoreHorizontal className="h-4 w-4" /></Button></DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem onClick={() => openEdit(r)}>Edit</DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => copyVerify(r.certificate_number)}><Copy className="h-3.5 w-3.5 mr-2" />Copy verification link</DropdownMenuItem>
-                      <DropdownMenuItem asChild><Link to={`/verify/${r.certificate_number}`} target="_blank"><ExternalLink className="h-3.5 w-3.5 mr-2" />View public page</Link></DropdownMenuItem>
-                      {r.certificate_status !== "valid" && <DropdownMenuItem onClick={() => setCertStatus(r.id, "valid")}>Mark valid</DropdownMenuItem>}
-                      {r.certificate_status !== "revoked" && <DropdownMenuItem onClick={() => setCertStatus(r.id, "revoked")}>Revoke</DropdownMenuItem>}
-                      {r.certificate_status !== "suspended" && <DropdownMenuItem onClick={() => setCertStatus(r.id, "suspended")}>Suspend</DropdownMenuItem>}
-                      <AlertDialog>
-                        <AlertDialogTrigger asChild><DropdownMenuItem className="text-destructive" onSelect={(e) => e.preventDefault()}>Delete</DropdownMenuItem></AlertDialogTrigger>
-                        <AlertDialogContent>
-                          <AlertDialogHeader><AlertDialogTitle>Delete certificate?</AlertDialogTitle><AlertDialogDescription>This action cannot be undone.</AlertDialogDescription></AlertDialogHeader>
-                          <AlertDialogFooter><AlertDialogCancel>Cancel</AlertDialogCancel><AlertDialogAction onClick={() => remove(r.id)}>Delete</AlertDialogAction></AlertDialogFooter>
-                        </AlertDialogContent>
-                      </AlertDialog>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        {filtered.length === 0 ? (
+          <EmptyState icon={<FileBadge className="h-5 w-5" />} title="No certificates yet" description="Add a certificate manually or sync via API." action={<Button onClick={openNew}><Plus className="h-4 w-4 mr-1" /> Add certificate</Button>} />
+        ) : (
+          <>
+            <div className="rounded-lg border overflow-hidden">
+              <Table>
+                <TableHeader><TableRow><TableHead>Certificate no.</TableHead><TableHead>Student</TableHead><TableHead className="hidden md:table-cell">Programme</TableHead><TableHead className="hidden lg:table-cell">Award</TableHead><TableHead>Status</TableHead><TableHead></TableHead></TableRow></TableHeader>
+                <TableBody>
+                  {slice.map((r) => (
+                    <TableRow key={r.id}>
+                      <TableCell className="font-mono text-xs">{r.certificate_number}</TableCell>
+                      <TableCell className="font-medium">{r.student_name}</TableCell>
+                      <TableCell className="text-sm hidden md:table-cell">{r.programme_name}</TableCell>
+                      <TableCell className="text-sm hidden lg:table-cell">{r.award_type}</TableCell>
+                      <TableCell><StatusBadge status={r.certificate_status} /></TableCell>
+                      <TableCell>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild><Button variant="ghost" size="icon"><MoreHorizontal className="h-4 w-4" /></Button></DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            <DropdownMenuItem onClick={() => openEdit(r)}>Edit</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => copyVerify(r.certificate_number)}><Copy className="h-3.5 w-3.5 mr-2" />Copy verification link</DropdownMenuItem>
+                            <DropdownMenuItem asChild><Link to={`/verify/${r.certificate_number}`} target="_blank"><ExternalLink className="h-3.5 w-3.5 mr-2" />View public page</Link></DropdownMenuItem>
+                            {r.certificate_status !== "valid" && <DropdownMenuItem onClick={() => setCertStatus(r.id, "valid")}>Mark valid</DropdownMenuItem>}
+                            {r.certificate_status !== "revoked" && <DropdownMenuItem onClick={() => setCertStatus(r.id, "revoked")}>Revoke</DropdownMenuItem>}
+                            {r.certificate_status !== "suspended" && <DropdownMenuItem onClick={() => setCertStatus(r.id, "suspended")}>Suspend</DropdownMenuItem>}
+                            <AlertDialog>
+                              <AlertDialogTrigger asChild><DropdownMenuItem className="text-destructive" onSelect={(e) => e.preventDefault()}>Delete</DropdownMenuItem></AlertDialogTrigger>
+                              <AlertDialogContent>
+                                <AlertDialogHeader><AlertDialogTitle>Delete certificate?</AlertDialogTitle><AlertDialogDescription>This action cannot be undone.</AlertDialogDescription></AlertDialogHeader>
+                                <AlertDialogFooter><AlertDialogCancel>Cancel</AlertDialogCancel><AlertDialogAction onClick={() => remove(r.id)}>Delete</AlertDialogAction></AlertDialogFooter>
+                              </AlertDialogContent>
+                            </AlertDialog>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+            <Paginator page={pg} pages={pages} total={total} onChange={setPage} />
+          </>
+        )}
       </CardContent></Card>
     </AppLayout>
   );
