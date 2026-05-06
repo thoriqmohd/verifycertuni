@@ -5,6 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import banner1 from "@/assets/banner-1.png";
 import banner2 from "@/assets/banner-2.png";
+import logoUtm from "@/assets/logos/utm.png";
+import logoUm from "@/assets/logos/um.png";
+import logoUkm from "@/assets/logos/ukm.png";
+import logoUsm from "@/assets/logos/usm.png";
+import logoUpm from "@/assets/logos/upm.png";
+import logoUitm from "@/assets/logos/uitm.png";
 
 const SLIDES = [
   {
