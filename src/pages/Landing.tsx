@@ -206,6 +206,25 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* CTA */}
+      <section className="py-20">
+        <div className="max-w-5xl mx-auto px-4 lg:px-6">
+          <div className="rounded-2xl gradient-hero text-primary-foreground p-10 lg:p-14 relative overflow-hidden">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,hsl(152_70%_50%/0.25),transparent_50%)]" />
+            <div className="relative grid lg:grid-cols-2 gap-8 items-center">
+              <div>
+                <h2 className="text-3xl lg:text-4xl font-bold mb-3">Ready to verify with confidence?</h2>
+                <p className="text-white/85">Join hundreds of HR teams making faster, fraud-proof hiring decisions.</p>
+              </div>
+              <div className="flex flex-wrap gap-3 lg:justify-end">
+                <Button size="lg" variant="secondary" asChild><Link to="/register">Get started free</Link></Button>
+                <Button size="lg" variant="outline" className="bg-white/10 text-white border-white/30 hover:bg-white/20 hover:text-white" asChild><Link to="/login">Try demo</Link></Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="py-12 border-t bg-background">
         <div className="max-w-7xl mx-auto px-4 lg:px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
