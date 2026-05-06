@@ -28,6 +28,7 @@ export default function AdminUniversities() {
   const [editId, setEditId] = useState<string | null>(null);
   const [f, setF] = useState<any>(empty);
   const [busy, setBusy] = useState(false);
+  const [page, setPage] = useState(1);
 
   const load = async () => {
     const { data } = await supabase.from("universities").select("*").order("created_at", { ascending: false });
@@ -35,7 +36,9 @@ export default function AdminUniversities() {
   };
   useEffect(() => { load(); }, []);
 
-  const filtered = rows.filter((r) => (filter === "all" || r.status === filter) && r.name.toLowerCase().includes(q.toLowerCase()));
+  const filtered = useMemo(() => rows.filter((r) => (filter === "all" || r.status === filter) && r.name.toLowerCase().includes(q.toLowerCase())), [rows, q, filter]);
+  useEffect(() => { setPage(1); }, [q, filter]);
+  const { slice, pages, page: pg, total } = usePaged(filtered, page, 10);
 
   const openNew = () => { setEditId(null); setF(empty); setDialogOpen(true); };
   const openEdit = (r: any) => { setEditId(r.id); setF({ ...r }); setDialogOpen(true); };
