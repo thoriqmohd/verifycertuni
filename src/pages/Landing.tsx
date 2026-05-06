@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import banner1 from "@/assets/banner-1.png";
 import banner2 from "@/assets/banner-2.png";
+import banner3 from "@/assets/banner-3.png";
 import logoUtm from "@/assets/logos/utm.png";
 import logoUm from "@/assets/logos/um.png";
 import logoUkm from "@/assets/logos/ukm.png";
@@ -24,6 +25,12 @@ const SLIDES = [
     eyebrow: "Verify in seconds. Hire with confidence.",
     title: <>Scan. Verify. <span className="text-success">Done.</span></>,
     desc: "From QR scan to official PDF report in under 2 seconds — straight from the issuing university's records.",
+  },
+  {
+    image: banner3,
+    eyebrow: "Built for employers & HR teams",
+    title: <>Hire with <span className="text-success">confidence</span>. Verify before you sign.</>,
+    desc: "Confirm every candidate's certificate against the issuing university — protect your business from credential fraud.",
   },
 ];
 
