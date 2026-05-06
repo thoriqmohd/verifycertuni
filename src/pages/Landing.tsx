@@ -243,19 +243,6 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Revenue sharing */}
-      <section className="py-20 bg-secondary/40 border-y">
-        <div className="max-w-5xl mx-auto px-4 lg:px-6 text-center">
-          <h2 className="text-3xl lg:text-4xl font-bold mb-3">Transparent revenue sharing</h2>
-          <p className="text-muted-foreground mb-10">Every verification fee is split fairly between the platform and the issuing university.</p>
-          <div className="data-card p-8 grid sm:grid-cols-3 gap-8 text-left">
-            <div><div className="text-xs uppercase tracking-wider text-muted-foreground mb-1">Verification fee</div><div className="text-3xl font-bold">RM20.00</div><p className="text-sm text-muted-foreground mt-1">Flat fee per request.</p></div>
-            <div><div className="text-xs uppercase tracking-wider text-muted-foreground mb-1">University share</div><div className="text-3xl font-bold text-success">RM11.00</div><p className="text-sm text-muted-foreground mt-1">60% commission back to issuer.</p></div>
-            <div><div className="text-xs uppercase tracking-wider text-muted-foreground mb-1">Platform + gateway</div><div className="text-3xl font-bold text-primary">RM9.00</div><p className="text-sm text-muted-foreground mt-1">40% platform + RM1 gateway fee.</p></div>
-          </div>
-        </div>
-      </section>
-
       {/* Security */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 lg:px-6 grid md:grid-cols-3 gap-6">
