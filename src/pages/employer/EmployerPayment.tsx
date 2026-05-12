@@ -78,7 +78,7 @@ export default function EmployerPayment() {
   };
 
   return (
-    <AppLayout title="Mock Payment" breadcrumbs={[{ label: "Employer" }, { label: "Search", to: "/employer/search" }, { label: "Payment" }]}>
+    <AppLayout title="Billplz Payment" breadcrumbs={[{ label: "Employer" }, { label: "Search", to: "/employer/search" }, { label: "Payment" }]}>
       <div className="max-w-2xl mx-auto grid gap-6">
         <Card>
           <CardHeader><CardTitle>Certificate</CardTitle></CardHeader>
