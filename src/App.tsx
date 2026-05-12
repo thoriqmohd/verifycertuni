@@ -23,6 +23,7 @@ import UniDashboard from "./pages/university/UniDashboard";
 import UniCertificates from "./pages/university/UniCertificates";
 import UniApi from "./pages/university/UniApi";
 import UniRevenue from "./pages/university/UniRevenue";
+import UniFinance from "./pages/university/UniFinance";
 
 import EmployerDashboard from "./pages/employer/EmployerDashboard";
 import EmployerSearch from "./pages/employer/EmployerSearch";
@@ -60,6 +61,7 @@ const App = () => (
             <Route path="/university/certificates" element={<ProtectedRoute allow={["university_admin"]}><UniCertificates /></ProtectedRoute>} />
             <Route path="/university/api-integration" element={<ProtectedRoute allow={["university_admin"]}><UniApi /></ProtectedRoute>} />
             <Route path="/university/revenue" element={<ProtectedRoute allow={["university_admin"]}><UniRevenue /></ProtectedRoute>} />
+            <Route path="/university/finance-admins" element={<ProtectedRoute allow={["university_admin"]}><UniFinance /></ProtectedRoute>} />
 
             <Route path="/employer/dashboard" element={<ProtectedRoute allow={["employer"]}><EmployerDashboard /></ProtectedRoute>} />
             <Route path="/employer/search" element={<ProtectedRoute allow={["employer"]}><EmployerSearch /></ProtectedRoute>} />
