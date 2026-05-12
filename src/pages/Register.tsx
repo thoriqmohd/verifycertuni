@@ -22,11 +22,14 @@ export default function Register() {
     if (f.password.length < 8) return toast.error("Password must be at least 8 characters");
     setBusy(true);
     try {
+      const companyId = crypto.randomUUID();
+
       // Create company
-      const { data: company, error: cErr } = await supabase.from("companies").insert({
+      const { error: cErr } = await supabase.from("companies").insert({
+        id: companyId,
         company_name: f.company_name, registration_no: f.registration_no,
         contact_person: f.contact_person, contact_email: f.email, address: f.address, status: "active",
-      }).select().single();
+      });
       if (cErr) throw cErr;
 
       // Create auth user
@@ -38,10 +41,13 @@ export default function Register() {
       if (!auth.user) throw new Error("Signup failed");
 
       // Profile + role
-      await supabase.from("users_profile").insert({
-        user_id: auth.user.id, full_name: f.contact_person, email: f.email, company_id: company.id, status: "active",
+      const { error: pErr } = await supabase.from("users_profile").insert({
+        user_id: auth.user.id, full_name: f.contact_person, email: f.email, company_id: companyId, status: "active",
       });
-      await supabase.from("user_roles").insert({ user_id: auth.user.id, role: "employer" });
+      if (pErr) throw pErr;
+
+      const { error: rErr } = await supabase.from("user_roles").insert({ user_id: auth.user.id, role: "employer" });
+      if (rErr) throw rErr;
 
       toast.success("Account created");
       nav("/employer/dashboard");
