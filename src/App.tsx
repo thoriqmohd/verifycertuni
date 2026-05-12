@@ -27,6 +27,7 @@ import UniRevenue from "./pages/university/UniRevenue";
 import EmployerDashboard from "./pages/employer/EmployerDashboard";
 import EmployerSearch from "./pages/employer/EmployerSearch";
 import EmployerPayment from "./pages/employer/EmployerPayment";
+import EmployerPaymentReturn from "./pages/employer/EmployerPaymentReturn";
 import EmployerReport from "./pages/employer/EmployerReport";
 import EmployerHistory from "./pages/employer/EmployerHistory";
 
