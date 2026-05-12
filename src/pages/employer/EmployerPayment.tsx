@@ -52,22 +52,29 @@ export default function EmployerPayment() {
 
   const pay = async () => {
     setBusy(true);
-    const ref = generateReportRef();
-    const selectedAddOns = ADD_ONS.filter((a) => picked[a.id]).map((a) => a.id).join(",");
-    const { error: e1 } = await supabase.from("verification_requests").update({
-      payment_status: "paid", status: "completed", report_reference_no: ref,
-    }).eq("id", vr.id);
-    if (e1) { setBusy(false); return toast.error(e1.message); }
-    const { error: e2 } = await supabase.from("transactions").insert({
-      verification_request_id: vr.id, amount: subtotal, university_share: uniShare, platform_share: platform,
-      gateway_fee: gateway, payment_gateway: settings.payment_gateway_name,
-      payment_reference: `MOCK-${Math.random().toString(36).slice(2, 8).toUpperCase()}${selectedAddOns ? `-${selectedAddOns.toUpperCase()}` : ""}`,
-      payment_status: "paid", paid_at: new Date().toISOString(),
-    });
-    setBusy(false);
-    if (e2) return toast.error(e2.message);
-    toast.success("Payment successful");
-    nav(`/employer/report/${vr.id}`);
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      const { data: profile } = await supabase
+        .from("users_profile").select("full_name, email").eq("user_id", user!.id).maybeSingle();
+      const selectedAddOns = ADD_ONS.filter((a) => picked[a.id]).map((a) => a.id).join(",");
+      const returnUrl = `${window.location.origin}/employer/payment-return/${vr.id}`;
+      const { data, error } = await supabase.functions.invoke("billplz-create-bill", {
+        body: {
+          verification_request_id: vr.id,
+          amount: subtotal,
+          description: `Verification ${vr.certificate?.certificate_number ?? ""}`.trim(),
+          name: profile?.full_name ?? user?.email ?? "Customer",
+          email: profile?.email ?? user?.email,
+          addons: selectedAddOns,
+          return_url: returnUrl,
+        },
+      });
+      if (error || !data?.payment_url) throw new Error(error?.message ?? "Failed to create bill");
+      window.location.href = data.payment_url;
+    } catch (e: any) {
+      setBusy(false);
+      toast.error(e.message ?? "Payment failed to start");
+    }
   };
 
   return (
