@@ -64,6 +64,7 @@ const App = () => (
             <Route path="/employer/dashboard" element={<ProtectedRoute allow={["employer"]}><EmployerDashboard /></ProtectedRoute>} />
             <Route path="/employer/search" element={<ProtectedRoute allow={["employer"]}><EmployerSearch /></ProtectedRoute>} />
             <Route path="/employer/payment/:id" element={<ProtectedRoute allow={["employer"]}><EmployerPayment /></ProtectedRoute>} />
+            <Route path="/employer/payment-return/:id" element={<ProtectedRoute allow={["employer"]}><EmployerPaymentReturn /></ProtectedRoute>} />
             <Route path="/employer/report/:id" element={<ProtectedRoute allow={["employer"]}><EmployerReport /></ProtectedRoute>} />
             <Route path="/employer/history" element={<ProtectedRoute allow={["employer"]}><EmployerHistory /></ProtectedRoute>} />
 
