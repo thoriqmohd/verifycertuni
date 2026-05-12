@@ -27,6 +27,7 @@ import UniRevenue from "./pages/university/UniRevenue";
 import EmployerDashboard from "./pages/employer/EmployerDashboard";
 import EmployerSearch from "./pages/employer/EmployerSearch";
 import EmployerPayment from "./pages/employer/EmployerPayment";
+import EmployerPaymentReturn from "./pages/employer/EmployerPaymentReturn";
 import EmployerReport from "./pages/employer/EmployerReport";
 import EmployerHistory from "./pages/employer/EmployerHistory";
 
@@ -63,6 +64,7 @@ const App = () => (
             <Route path="/employer/dashboard" element={<ProtectedRoute allow={["employer"]}><EmployerDashboard /></ProtectedRoute>} />
             <Route path="/employer/search" element={<ProtectedRoute allow={["employer"]}><EmployerSearch /></ProtectedRoute>} />
             <Route path="/employer/payment/:id" element={<ProtectedRoute allow={["employer"]}><EmployerPayment /></ProtectedRoute>} />
+            <Route path="/employer/payment-return/:id" element={<ProtectedRoute allow={["employer"]}><EmployerPaymentReturn /></ProtectedRoute>} />
             <Route path="/employer/report/:id" element={<ProtectedRoute allow={["employer"]}><EmployerReport /></ProtectedRoute>} />
             <Route path="/employer/history" element={<ProtectedRoute allow={["employer"]}><EmployerHistory /></ProtectedRoute>} />
 
