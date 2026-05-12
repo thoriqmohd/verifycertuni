@@ -2,7 +2,7 @@ import { ReactNode, useState } from "react";
 import { NavLink, useLocation, useNavigate, Link } from "react-router-dom";
 import {
   LayoutDashboard, Building2, FileBadge, Receipt, Settings, Settings2, ScrollText, KeyRound,
-  Search, History, Wallet, BadgeDollarSign, Menu, LogOut, ShieldCheck, X,
+  Search, History, Wallet, BadgeDollarSign, Menu, LogOut, ShieldCheck, X, Users,
 } from "lucide-react";
 import { useAuth, AppRole } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
@@ -26,6 +26,7 @@ const menus: Record<AppRole, Item[]> = {
     { to: "/university/certificates", label: "Certificates", icon: FileBadge },
     { to: "/university/api-integration", label: "API Integration", icon: KeyRound },
     { to: "/university/revenue", label: "Revenue", icon: Wallet },
+    { to: "/university/finance-admins", label: "Finance Admins", icon: Users },
     { to: "/settings", label: "Settings", icon: Settings },
   ],
   employer: [
