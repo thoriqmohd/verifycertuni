@@ -8,7 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { Loader2, CreditCard, ShieldCheck, FileText, Stamp, Zap, Sparkles } from "lucide-react";
 import { toast } from "sonner";
-import { formatRM, generateReportRef } from "@/lib/format";
+import { formatRM } from "@/lib/format";
 
 type AddOn = { id: string; name: string; desc: string; price: number; icon: any; popular?: boolean };
 
