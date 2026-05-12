@@ -145,9 +145,9 @@ export default function EmployerPayment() {
               <span className="text-2xl font-bold text-primary">{formatRM(subtotal)}</span>
             </div>
             <Button onClick={pay} disabled={busy} className="w-full" size="lg">
-              {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <><CreditCard className="h-4 w-4 mr-2" /> Pay {formatRM(subtotal)} now</>}
+              {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <><CreditCard className="h-4 w-4 mr-2" /> Pay {formatRM(subtotal)} with Billplz</>}
             </Button>
-            <p className="text-xs text-center text-muted-foreground flex items-center justify-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5" /> Mock payment for MVP demo. No real charge.</p>
+            <p className="text-xs text-center text-muted-foreground flex items-center justify-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5" /> You will be redirected to Billplz secure payment page.</p>
           </CardContent>
         </Card>
       </div>
