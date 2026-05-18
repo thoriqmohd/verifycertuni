@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import brandLogo from "@/assets/univerify-logo.png";
 
 type Item = { to: string; label: string; icon: any };
 
@@ -64,13 +65,10 @@ export function AppLayout({ children, title, breadcrumbs }: { children: ReactNod
 
   const Sidebar = (
     <aside className="flex h-full w-64 flex-col bg-sidebar text-sidebar-foreground">
-      <div className="flex h-16 items-center gap-2 px-6 border-b border-sidebar-border">
-        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-sidebar-primary">
-          <ShieldCheck className="h-5 w-5 text-sidebar-primary-foreground" />
-        </div>
-        <div>
-          <div className="font-semibold text-white leading-tight">VerifyCert</div>
-          <div className="text-[10px] uppercase tracking-wider text-sidebar-foreground/60">{primaryRole && roleLabels[primaryRole]}</div>
+      <div className="flex h-16 items-center gap-2 px-4 border-b border-sidebar-border bg-white/95">
+        <img src={brandLogo} alt="UniVerify" className="h-9 w-auto" />
+        <div className="ml-auto">
+          <div className="text-[10px] uppercase tracking-wider text-sidebar-primary/70">{primaryRole && roleLabels[primaryRole]}</div>
         </div>
       </div>
       <nav className="flex-1 overflow-y-auto p-3 space-y-1">

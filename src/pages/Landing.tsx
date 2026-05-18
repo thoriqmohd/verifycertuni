@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import banner1 from "@/assets/banner-1.png";
 import banner2 from "@/assets/banner-2.png";
 import banner3 from "@/assets/banner-3.png";
+import brandLogo from "@/assets/univerify-logo.png";
 
 const SLIDES = [
   {
@@ -68,8 +69,7 @@ export default function Landing() {
       <header className="border-b sticky top-0 z-40 bg-background/80 backdrop-blur">
         <div className="max-w-7xl mx-auto flex items-center justify-between h-16 px-4 lg:px-6">
           <Link to="/" className="flex items-center gap-2">
-            <div className="h-9 w-9 rounded-lg bg-primary flex items-center justify-center"><ShieldCheck className="h-5 w-5 text-primary-foreground" /></div>
-            <span className="font-bold text-lg">VerifyCert</span>
+            <img src={brandLogo} alt="UniVerify" className="h-10 w-auto" />
           </Link>
           <nav className="hidden md:flex items-center gap-7 text-sm">
             <a href="#how" className="text-muted-foreground hover:text-foreground">How it works</a>
@@ -273,8 +273,8 @@ export default function Landing() {
       <footer className="py-12 border-t bg-background">
         <div className="max-w-7xl mx-auto px-4 lg:px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
-            <div className="h-7 w-7 rounded-md bg-primary flex items-center justify-center"><ShieldCheck className="h-4 w-4 text-primary-foreground" /></div>
-            <span>© {new Date().getFullYear()} VerifyCert. All rights reserved.</span>
+            <img src={brandLogo} alt="UniVerify" className="h-7 w-auto" />
+            <span>© {new Date().getFullYear()} UniVerify. All rights reserved.</span>
           </div>
           <div className="flex items-center gap-6">
             <Link to="/login" className="hover:text-foreground">Sign in</Link>

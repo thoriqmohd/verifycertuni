@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ShieldCheck, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import brandLogo from "@/assets/univerify-logo.png";
 
 export default function Register() {
   const nav = useNavigate();
@@ -62,8 +63,7 @@ export default function Register() {
     <div className="min-h-screen flex items-center justify-center p-4 bg-secondary/40 py-10">
       <div className="w-full max-w-lg">
         <Link to="/" className="flex items-center justify-center gap-2 mb-6">
-          <div className="h-10 w-10 rounded-lg bg-primary flex items-center justify-center"><ShieldCheck className="h-5 w-5 text-primary-foreground" /></div>
-          <span className="font-bold text-xl">VerifyCert</span>
+          <img src={brandLogo} alt="UniVerify" className="h-14 w-auto" />
         </Link>
         <Card>
           <CardHeader>
