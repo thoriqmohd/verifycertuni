@@ -9,6 +9,7 @@ import { ShieldCheck, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { roleHomePath, AppRole } from "@/contexts/AuthContext";
 import loginBg from "@/assets/login-bg.jpg";
+import brandLogo from "@/assets/univerify-logo.png";
 
 const demoButtons: { role: AppRole; label: string }[] = [
   { role: "super_admin", label: "Super Admin" },
