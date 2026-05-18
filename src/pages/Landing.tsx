@@ -273,8 +273,8 @@ export default function Landing() {
       <footer className="py-12 border-t bg-background">
         <div className="max-w-7xl mx-auto px-4 lg:px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
-            <div className="h-7 w-7 rounded-md bg-primary flex items-center justify-center"><ShieldCheck className="h-4 w-4 text-primary-foreground" /></div>
-            <span>© {new Date().getFullYear()} VerifyCert. All rights reserved.</span>
+            <img src={brandLogo} alt="UniVerify" className="h-7 w-auto" />
+            <span>© {new Date().getFullYear()} UniVerify. All rights reserved.</span>
           </div>
           <div className="flex items-center gap-6">
             <Link to="/login" className="hover:text-foreground">Sign in</Link>
