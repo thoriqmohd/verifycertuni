@@ -63,8 +63,7 @@ export default function Login() {
       <div className="absolute inset-0 bg-black/50" />
       <div className="w-full max-w-md relative z-10">
         <Link to="/" className="flex items-center justify-center gap-2 mb-6">
-          <div className="h-10 w-10 rounded-lg bg-primary flex items-center justify-center"><ShieldCheck className="h-5 w-5 text-primary-foreground" /></div>
-          <span className="font-bold text-xl">VerifyCert</span>
+          <img src={brandLogo} alt="UniVerify" className="h-14 w-auto bg-white/95 px-3 py-2 rounded-lg" />
         </Link>
         <Card className="shadow-[var(--shadow-card)]">
           <CardHeader>
