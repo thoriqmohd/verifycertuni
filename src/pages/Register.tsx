@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ShieldCheck, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import brandLogo from "@/assets/univerify-logo.png";
 
 export default function Register() {
   const nav = useNavigate();
