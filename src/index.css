@@ -88,13 +88,16 @@
     box-shadow: var(--shadow-soft);
   }
   .gradient-hero { background: var(--gradient-hero); }
+  .gradient-brand { background: var(--gradient-brand); }
   .gradient-success { background: var(--gradient-success); }
+  .gradient-footer { background: var(--gradient-footer); }
   .text-gradient {
-    background: var(--gradient-hero);
+    background: var(--gradient-brand);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
   }
+  .ring-brand { box-shadow: 0 0 0 1px hsl(var(--primary) / 0.15), var(--shadow-elegant); }
 }
 
 @media print {
