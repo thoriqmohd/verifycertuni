@@ -270,16 +270,41 @@ export default function Landing() {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 border-t bg-background">
-        <div className="max-w-7xl mx-auto px-4 lg:px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
-          <div className="flex items-center gap-2">
-            <img src={brandLogo} alt="UniVerify" className="h-7 w-auto" />
-            <span>© {new Date().getFullYear()} UniVerify. All rights reserved.</span>
+      <footer className="gradient-footer text-white/80 pt-16 pb-8 mt-0">
+        <div className="max-w-7xl mx-auto px-4 lg:px-6">
+          <div className="grid md:grid-cols-4 gap-10 pb-10 border-b border-white/10">
+            <div className="md:col-span-2">
+              <div className="inline-flex items-center bg-white rounded-xl px-4 py-3 shadow-lg">
+                <img src={brandLogo} alt="UniVerify" className="h-10 w-auto" />
+              </div>
+              <p className="mt-5 text-sm text-white/70 max-w-md leading-relaxed">
+                Trusted university document verification — connecting employers with authoritative source-of-truth certificate data from partner institutions.
+              </p>
+              <div className="mt-5 flex items-center gap-2 text-xs text-white/60">
+                <ShieldCheck className="h-4 w-4 text-accent" /> Secure · HMAC-signed · Audit-ready
+              </div>
+            </div>
+            <div>
+              <h4 className="text-white text-sm font-semibold mb-4 uppercase tracking-wider">Platform</h4>
+              <ul className="space-y-3 text-sm">
+                <li><a href="#how" className="hover:text-white transition-colors">How it works</a></li>
+                <li><a href="#universities" className="hover:text-white transition-colors">For universities</a></li>
+                <li><a href="#employers" className="hover:text-white transition-colors">For employers</a></li>
+                <li><a href="#faq" className="hover:text-white transition-colors">FAQ</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-white text-sm font-semibold mb-4 uppercase tracking-wider">Account</h4>
+              <ul className="space-y-3 text-sm">
+                <li><Link to="/login" className="hover:text-white transition-colors">Sign in</Link></li>
+                <li><Link to="/register" className="hover:text-white transition-colors">Register</Link></li>
+                <li><Link to="/verify" className="hover:text-white transition-colors">Verify report</Link></li>
+              </ul>
+            </div>
           </div>
-          <div className="flex items-center gap-6">
-            <Link to="/login" className="hover:text-foreground">Sign in</Link>
-            <Link to="/register" className="hover:text-foreground">Register</Link>
-            <a href="#faq" className="hover:text-foreground">FAQ</a>
+          <div className="pt-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-white/60">
+            <span>© {new Date().getFullYear()} UniVerify. All rights reserved.</span>
+            <span>Trusted University Document Verification</span>
           </div>
         </div>
       </footer>
