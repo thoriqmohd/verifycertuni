@@ -14,7 +14,7 @@ const SLIDES = [
     image: banner1,
     eyebrow: "Trusted by Malaysian universities & employers",
     title: <>The trusted source-of-truth for <span className="text-success">academic certificates</span> in Malaysia.</>,
-    desc: "VerifyCert connects universities, employers and graduates on one platform — instant, tamper-evident, audit-ready verification reports.",
+    desc: "UniVerify connects universities, employers and graduates on one platform — instant, tamper-evident, audit-ready verification reports.",
   },
   {
     image: banner2,
@@ -242,7 +242,7 @@ export default function Landing() {
         <div className="max-w-3xl mx-auto px-4 lg:px-6">
           <h2 className="text-3xl lg:text-4xl font-bold text-center mb-10">Frequently asked questions</h2>
           <Accordion type="single" collapsible className="data-card px-6">
-            <AccordionItem value="1"><AccordionTrigger>Is this an official Government platform?</AccordionTrigger><AccordionContent>VerifyCert is an independent platform that partners with Malaysian universities to provide source-of-truth verification.</AccordionContent></AccordionItem>
+            <AccordionItem value="1"><AccordionTrigger>Is this an official Government platform?</AccordionTrigger><AccordionContent>UniVerify is an independent platform that partners with Malaysian universities to provide source-of-truth verification.</AccordionContent></AccordionItem>
             <AccordionItem value="2"><AccordionTrigger>How long does verification take?</AccordionTrigger><AccordionContent>Verifications are returned instantly once payment is confirmed.</AccordionContent></AccordionItem>
             <AccordionItem value="3"><AccordionTrigger>How are universities paid?</AccordionTrigger><AccordionContent>Monthly settlement is processed by our finance team and reflected in the university dashboard.</AccordionContent></AccordionItem>
             <AccordionItem value="4"><AccordionTrigger>Do you support API integration?</AccordionTrigger><AccordionContent>Yes — we offer HMAC-signed sync endpoints and webhook callbacks. See the API Integration page in your university dashboard.</AccordionContent></AccordionItem>
@@ -254,7 +254,7 @@ export default function Landing() {
       <section className="py-20">
         <div className="max-w-5xl mx-auto px-4 lg:px-6">
           <div className="rounded-2xl gradient-hero text-primary-foreground p-10 lg:p-14 relative overflow-hidden">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,hsl(152_70%_50%/0.25),transparent_50%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,hsl(352_80%_55%/0.35),transparent_50%)]" />
             <div className="relative grid lg:grid-cols-2 gap-8 items-center">
               <div>
                 <h2 className="text-3xl lg:text-4xl font-bold mb-3">Ready to verify with confidence?</h2>

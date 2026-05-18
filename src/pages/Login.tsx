@@ -69,7 +69,7 @@ export default function Login() {
         <Card className="shadow-[var(--shadow-card)]">
           <CardHeader>
             <CardTitle>Sign in</CardTitle>
-            <CardDescription>Access your VerifyCert dashboard</CardDescription>
+            <CardDescription>Access your UniVerify dashboard</CardDescription>
           </CardHeader>
           <CardContent className="space-y-5">
             <form onSubmit={handleLogin} className="space-y-4">
