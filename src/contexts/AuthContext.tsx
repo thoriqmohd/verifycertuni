@@ -46,25 +46,44 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setRoles(((rs ?? []) as { role: AppRole }[]).map((r) => r.role));
   };
 
+  const syncAuthState = async (nextSession: Session | null) => {
+    setLoading(true);
+    setSession(nextSession);
+    setUser(nextSession?.user ?? null);
+
+    if (!nextSession?.user) {
+      setProfile(null);
+      setRoles([]);
+      setLoading(false);
+      return;
+    }
+
+    setProfile(null);
+    setRoles([]);
+
+    try {
+      await loadExtras(nextSession.user.id);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const refresh = async () => {
-    if (user) await loadExtras(user.id);
+    if (!user) return;
+    setLoading(true);
+    try {
+      await loadExtras(user.id);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
     const { data: sub } = supabase.auth.onAuthStateChange((_evt, sess) => {
-      setSession(sess);
-      setUser(sess?.user ?? null);
-      if (sess?.user) {
-        setTimeout(() => loadExtras(sess.user.id), 0);
-      } else {
-        setProfile(null); setRoles([]);
-      }
+      void syncAuthState(sess);
     });
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      if (session?.user) loadExtras(session.user.id).finally(() => setLoading(false));
-      else setLoading(false);
+      void syncAuthState(session);
     });
     return () => sub.subscription.unsubscribe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
