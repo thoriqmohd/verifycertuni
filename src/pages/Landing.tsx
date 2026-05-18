@@ -68,8 +68,7 @@ export default function Landing() {
       <header className="border-b sticky top-0 z-40 bg-background/80 backdrop-blur">
         <div className="max-w-7xl mx-auto flex items-center justify-between h-16 px-4 lg:px-6">
           <Link to="/" className="flex items-center gap-2">
-            <div className="h-9 w-9 rounded-lg bg-primary flex items-center justify-center"><ShieldCheck className="h-5 w-5 text-primary-foreground" /></div>
-            <span className="font-bold text-lg">VerifyCert</span>
+            <img src={brandLogo} alt="UniVerify" className="h-10 w-auto" />
           </Link>
           <nav className="hidden md:flex items-center gap-7 text-sm">
             <a href="#how" className="text-muted-foreground hover:text-foreground">How it works</a>
