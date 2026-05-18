@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Eye, EyeOff, Copy, RefreshCw, Activity } from "lucide-react";
+import { Eye, EyeOff, Copy, RefreshCw, Activity, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { generateApiKey, generateApiSecret, formatDateTime } from "@/lib/format";
 
@@ -32,7 +32,7 @@ export default function UniApi() {
   };
   const copy = (v: string, label: string) => { navigator.clipboard.writeText(v); toast.success(`${label} copied`); };
 
-  if (!u) return <AppLayout title="API Integration"><div /></AppLayout>;
+  if (!u) return <AppLayout title="API Integration"><div className="flex items-center justify-center py-16"><Loader2 className="h-5 w-5 animate-spin text-primary" /></div></AppLayout>;
 
   return (
     <AppLayout title="API Integration" breadcrumbs={[{ label: "University" }, { label: "API Integration" }]}>
